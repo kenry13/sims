@@ -6,6 +6,7 @@ use App\Models\Item;
 use App\Models\Category;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ItemController extends Controller
 {
@@ -14,14 +15,18 @@ class ItemController extends Controller
         $items = Item::with(['category', 'supplier'])
                      ->latest()
                      ->paginate(10);
-        return view('items.index', compact('items'));
+
+        return Inertia::render('Items/Index', [
+            'items' => $items,
+        ]);
     }
 
     public function create()
     {
-        $categories = Category::all();
-        $suppliers  = Supplier::all();
-        return view('items.create', compact('categories', 'suppliers'));
+        return Inertia::render('Items/Create', [
+            'categories' => Category::all(),
+            'suppliers'  => Supplier::all(),
+        ]);
     }
 
     public function store(Request $request)
@@ -43,17 +48,13 @@ class ItemController extends Controller
             ->with('success', 'Barang berhasil ditambahkan!');
     }
 
-    public function show(Item $item)
-    {
-        $item->load(['category', 'supplier', 'stockIns', 'stockOuts']);
-        return view('items.show', compact('item'));
-    }
-
     public function edit(Item $item)
     {
-        $categories = Category::all();
-        $suppliers  = Supplier::all();
-        return view('items.edit', compact('item', 'categories', 'suppliers'));
+        return Inertia::render('Items/Edit', [
+            'item'       => $item,
+            'categories' => Category::all(),
+            'suppliers'  => Supplier::all(),
+        ]);
     }
 
     public function update(Request $request, Item $item)
