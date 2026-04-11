@@ -5,6 +5,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\StockInController;
+use App\Http\Controllers\StockOutController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -31,6 +33,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('suppliers',  SupplierController::class);
     Route::resource('items',      ItemController::class);
+    Route::resource('stock-ins',  StockInController::class);
+    Route::resource('stock-outs', StockOutController::class);
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

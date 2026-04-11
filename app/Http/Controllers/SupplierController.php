@@ -4,18 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class SupplierController extends Controller
 {
     public function index()
     {
-        $suppliers = Supplier::latest()->paginate(10);
-        return view('suppliers.index', compact('suppliers'));
+        $suppliers = Supplier::withCount('items')->latest()->paginate(10);
+        return Inertia::render('Suppliers/Index', [
+            'suppliers' => $suppliers,
+        ]);
     }
 
     public function create()
     {
-        return view('suppliers.create');
+        return Inertia::render('Suppliers/Create');
     }
 
     public function store(Request $request)
@@ -34,7 +37,9 @@ class SupplierController extends Controller
 
     public function edit(Supplier $supplier)
     {
-        return view('suppliers.edit', compact('supplier'));
+        return Inertia::render('Suppliers/Edit', [
+            'supplier' => $supplier,
+        ]);
     }
 
     public function update(Request $request, Supplier $supplier)
@@ -54,7 +59,6 @@ class SupplierController extends Controller
     public function destroy(Supplier $supplier)
     {
         $supplier->delete();
-
         return redirect()->route('suppliers.index')
             ->with('success', 'Supplier berhasil dihapus!');
     }
