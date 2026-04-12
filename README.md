@@ -1,66 +1,281 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<div align="center">
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# 📦 SIMS
+### Smart Inventory Management System
 
-## About Laravel
+![Laravel](https://img.shields.io/badge/Laravel-v10-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
+![React](https://img.shields.io/badge/React-v18-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![TailwindCSS](https://img.shields.io/badge/Tailwind-v3-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![Inertia](https://img.shields.io/badge/Inertia.js-v1-9553E9?style=for-the-badge)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Aplikasi manajemen inventaris berbasis web yang dibangun dengan stack modern Laravel + React + Inertia.js. Dirancang untuk memudahkan pengelolaan stok barang, pencatatan transaksi masuk/keluar, serta pemantauan stok secara real-time.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+</div>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 📋 Daftar Isi
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- [Tentang Proyek](#-tentang-proyek)
+- [Fitur](#-fitur)
+- [Teknologi yang Digunakan](#-teknologi-yang-digunakan)
+- [Struktur Database](#-struktur-database)
+- [Persyaratan Sistem](#-persyaratan-sistem)
+- [Cara Instalasi](#-cara-instalasi)
+- [Cara Menjalankan Project](#-cara-menjalankan-project)
+- [Akun Default](#-akun-default)
+- [Struktur Folder](#-struktur-folder)
+- [Pengembang](#-pengembang)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🧩 Tentang Proyek
 
-## Laravel Sponsors
+SIMS (Smart Inventory Management System) adalah aplikasi web untuk mengelola inventaris barang secara efisien. Aplikasi ini mendukung dua level akses pengguna yaitu **Admin** dan **User (Staff Gudang)**, dengan fitur pencatatan barang masuk/keluar yang otomatis memperbarui stok, serta notifikasi ketika stok barang mendekati batas minimum.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Proyek ini dikembangkan menggunakan metode **Agile** dengan siklus sprint mingguan selama 7 minggu.
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## ✨ Fitur
 
-## Contributing
+### 👑 Admin
+- Manajemen data barang (CRUD) lengkap dengan kode unik dan satuan
+- Manajemen kategori barang
+- Manajemen data supplier
+- Pencatatan barang masuk & keluar
+- Pemantauan stok real-time dengan indikator status (Aman / Menipis)
+- Dashboard ringkasan inventaris
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 👤 User (Staff Gudang)
+- Melihat daftar barang dan status stok
+- Mencatat barang masuk dan keluar
+- Melihat riwayat transaksi
 
-## Code of Conduct
+### ⚙️ Sistem
+- Autentikasi (Login / Logout) dengan middleware role
+- Stok otomatis bertambah saat barang masuk
+- Stok otomatis berkurang saat barang keluar
+- Validasi stok — tidak bisa keluar melebihi stok tersedia
+- Peringatan stok menipis otomatis
+- Pagination pada semua halaman daftar
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## 🛠️ Teknologi yang Digunakan
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+| Kategori | Teknologi | Versi |
+|---|---|---|
+| Backend Framework | Laravel | 10.x |
+| Frontend Library | React.js | 18.x |
+| Bridge (SSR-free SPA) | Inertia.js | 1.x |
+| CSS Framework | Tailwind CSS | 3.x |
+| Build Tool | Vite | 5.x |
+| Database | MySQL | 8.0 |
+| Auth Scaffolding | Laravel Breeze | 2.x |
+| Package Manager (PHP) | Composer | 2.x |
+| Package Manager (JS) | NPM | 10.x |
+| Server Development | Laragon | 6.x |
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 🗄️ Struktur Database
+
+```
+users           → data pengguna + role (admin/user)
+categories      → kategori barang
+suppliers       → data supplier
+items           → data barang (stok, min_stok, satuan)
+stock_ins       → riwayat barang masuk
+stock_outs      → riwayat barang keluar
+```
+
+**Relasi Antar Tabel:**
+- `items` → belongs to `categories` dan `suppliers`
+- `stock_ins` → belongs to `items` dan `users`
+- `stock_outs` → belongs to `items` dan `users`
+
+---
+
+## 💻 Persyaratan Sistem
+
+Pastikan perangkat kamu sudah terinstal:
+
+- [Laragon](https://laragon.org/download/) (sudah termasuk PHP 8.2+, MySQL, Apache)
+- [Composer](https://getcomposer.org/) 2.x
+- [Node.js](https://nodejs.org/) 18+ dan NPM
+- [Git](https://git-scm.com/)
+
+---
+
+## 🚀 Cara Instalasi
+
+### 1. Clone Repository
+
+```bash
+git clone https://github.com/username/sims.git
+cd sims
+```
+
+> Ganti `username` dengan username GitHub kamu.
+
+### 2. Install Dependensi PHP
+
+```bash
+composer install
+```
+
+### 3. Install Dependensi JavaScript
+
+```bash
+npm install
+```
+
+### 4. Salin File Environment
+
+```bash
+cp .env.example .env
+```
+
+### 5. Generate Application Key
+
+```bash
+php artisan key:generate
+```
+
+### 6. Konfigurasi Database
+
+Buka file `.env`, sesuaikan bagian berikut:
+
+```env
+APP_NAME=SIMS
+APP_URL=http://localhost:8000
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=sims_db
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+> Password root Laragon defaultnya kosong.
+
+### 7. Buat Database
+
+Buka **phpMyAdmin** di Laragon lalu buat database baru bernama `sims_db`.
+
+Atau lewat terminal:
+
+```bash
+mysql -u root -e "CREATE DATABASE sims_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+```
+
+### 8. Jalankan Migrasi & Seeder
+
+```bash
+php artisan migrate --seed
+```
+
+Perintah ini akan membuat semua tabel dan mengisi data awal (kategori, supplier, barang, dan akun default).
+
+---
+
+## ▶️ Cara Menjalankan Project
+
+Jalankan dua perintah ini di **dua terminal terpisah**:
+
+**Terminal 1 — Backend Laravel:**
+```bash
+php artisan serve
+```
+
+**Terminal 2 — Frontend Vite (React):**
+```bash
+npm run dev
+```
+
+Kemudian buka browser dan akses:
+
+```
+http://localhost:8000
+```
+
+---
+
+## 🔑 Akun Default
+
+Setelah menjalankan seeder, tersedia dua akun untuk login:
+
+| Role | Email | Password |
+|---|---|---|
+| Admin | admin@sims.com | password |
+| User | user@sims.com | password |
+
+---
+
+## 📁 Struktur Folder
+
+```
+sims/
+├── app/
+│   ├── Http/
+│   │   └── Controllers/
+│   │       ├── DashboardController.php
+│   │       ├── CategoryController.php
+│   │       ├── SupplierController.php
+│   │       ├── ItemController.php
+│   │       ├── StockInController.php
+│   │       └── StockOutController.php
+│   └── Models/
+│       ├── User.php
+│       ├── Category.php
+│       ├── Supplier.php
+│       ├── Item.php
+│       ├── StockIn.php
+│       └── StockOut.php
+├── database/
+│   ├── migrations/       ← struktur tabel database
+│   └── seeders/          ← data awal
+├── resources/
+│   └── js/
+│       ├── Layouts/
+│       │   └── AuthenticatedLayout.jsx  ← layout sidebar utama
+│       └── Pages/
+│           ├── Dashboard.jsx
+│           ├── Items/
+│           │   ├── Index.jsx
+│           │   ├── Create.jsx
+│           │   └── Edit.jsx
+│           ├── Categories/
+│           │   ├── Index.jsx
+│           │   ├── Create.jsx
+│           │   └── Edit.jsx
+│           ├── Suppliers/
+│           │   ├── Index.jsx
+│           │   ├── Create.jsx
+│           │   └── Edit.jsx
+│           ├── StockIns/
+│           │   ├── Index.jsx
+│           │   └── Create.jsx
+│           └── StockOuts/
+│               ├── Index.jsx
+│               └── Create.jsx
+└── routes/
+    └── web.php           ← definisi semua route
+```
+
+---
+
+## 👨‍💻 Pengembang
+
+Dikembangkan sebagai tugas mata kuliah Pemrograman Web Lanjutan dengan metode pengembangan **Agile (7 Sprint)**.
+
+---
+
+<div align="center">
+
+Dibuat dengan ❤️ menggunakan Laravel & React
+
+</div>
