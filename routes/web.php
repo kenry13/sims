@@ -7,6 +7,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\StockInController;
 use App\Http\Controllers\StockOutController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,6 +24,9 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     // Dashboard — hanya satu, pakai controller
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Reports
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 
     // Profile
     Route::get('/profile',    [ProfileController::class, 'edit'])->name('profile.edit');
