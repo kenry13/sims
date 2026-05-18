@@ -24,127 +24,114 @@ export default function ForgotPassword({ status }) {
                 alignItems: 'center',
                 justifyContent: 'center',
                 overflow: 'hidden',
+                background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
             }}>
-                {/* Blurred stretched background */}
-                <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    backgroundImage: 'url(/images/worker.jpg)',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
-                    filter: 'blur(20px) brightness(0.85)',
-                    transform: 'scale(1.1)',
-                    zIndex: 0,
-                }} />
-
-                {/* Original image contain on top */}
-                <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    backgroundImage: 'url(/images/worker.jpg)',
-                    backgroundSize: 'contain',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
-                    zIndex: 1,
-                }} />
-
-                {/* Blue overlay */}
-                <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    backgroundColor: 'rgba(100, 150, 190, 0.45)',
-                    zIndex: 2,
-                }} />
+                {/* Abstract background elements */}
+                <div style={{ position: 'absolute', top: '-10%', right: '-10%', width: '400px', height: '400px', background: 'radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, transparent 70%)', borderRadius: '50%' }} />
+                <div style={{ position: 'absolute', bottom: '-10%', left: '-10%', width: '300px', height: '300px', background: 'radial-gradient(circle, rgba(14, 165, 233, 0.05) 0%, transparent 70%)', borderRadius: '50%' }} />
 
                 {/* Card */}
                 <div style={{
                     position: 'relative',
                     zIndex: 3,
-                    backgroundColor: 'rgba(45, 75, 95, 0.88)',
+                    backgroundColor: '#1e293b',
+                    border: '1px solid rgba(255,255,255,0.1)',
                     borderRadius: '16px',
                     padding: '40px 44px',
                     width: '100%',
                     maxWidth: '460px',
-                    boxShadow: '0 8px 40px rgba(0,0,0,0.35)',
+                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
                 }}>
+                    <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+                        <div style={{ 
+                            width: '48px', 
+                            height: '48px', 
+                            backgroundColor: '#0ea5e9', 
+                            borderRadius: '12px', 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'center',
+                            margin: '0 auto 16px',
+                        }}>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                                <path d="M21 7l-9-4-9 4m18 0l-9 4m9-4v10l-9 4m0-10L3 7m9 4v10M3 7v10l9 4" />
+                            </svg>
+                        </div>
+                        <h2 style={{ color: 'white', fontSize: '20px', fontWeight: '800' }}>Lupa Password?</h2>
+                    </div>
+
                     {/* Description */}
                     <p style={{
-                        color: '#d0e8f8',
+                        color: '#94a3b8',
                         fontSize: '14px',
                         marginBottom: '24px',
                         lineHeight: '1.6',
-                        fontFamily: 'sans-serif',
+                        textAlign: 'center',
                     }}>
-                        Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
+                        Jangan khawatir. Masukkan alamat email Anda dan kami akan mengirimkan link reset password yang memungkinkan Anda memilih password baru.
                     </p>
 
                     {status && (
-                        <div style={{ marginBottom: '16px', fontSize: '14px', color: '#4ade80', fontFamily: 'sans-serif' }}>
+                        <div style={{ marginBottom: '16px', fontSize: '14px', color: '#10b981', textAlign: 'center', padding: '10px', background: 'rgba(16, 185, 129, 0.1)', borderRadius: '8px' }}>
                             {status}
                         </div>
                     )}
 
                     <form onSubmit={submit}>
                         {/* Email */}
-                        <div style={{ marginBottom: '20px' }}>
+                        <div style={{ marginBottom: '24px' }}>
                             <label
                                 htmlFor="email"
                                 style={{
                                     display: 'block',
-                                    color: '#ffffff',
-                                    fontWeight: '700',
-                                    fontSize: '15px',
+                                    color: '#e2e8f0',
+                                    fontWeight: '600',
+                                    fontSize: '14px',
                                     marginBottom: '8px',
-                                    fontFamily: 'sans-serif',
                                 }}
                             >
-                                Email
+                                Email Address
                             </label>
                             <input
                                 id="email"
                                 type="email"
                                 name="email"
                                 value={data.email}
-                                autoFocus
                                 onChange={(e) => setData('email', e.target.value)}
                                 style={{
                                     width: '100%',
-                                    padding: '12px 14px',
+                                    padding: '12px 16px',
                                     borderRadius: '8px',
-                                    border: 'none',
-                                    backgroundColor: '#ffffff',
+                                    border: '1px solid rgba(255,255,255,0.1)',
+                                    backgroundColor: 'rgba(15, 23, 42, 0.5)',
+                                    color: 'white',
                                     fontSize: '15px',
                                     outline: 'none',
-                                    boxSizing: 'border-box',
                                 }}
+                                required
                             />
-                            <InputError message={errors.email} className="mt-2" />
+                            <InputError message={errors.email} style={{ marginTop: '8px', color: '#f87171', fontSize: '12px' }} />
                         </div>
 
-                        {/* Submit button */}
-                        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                            <button
-                                type="submit"
-                                disabled={processing}
-                                style={{
-                                    backgroundColor: '#e8edf2',
-                                    color: '#2d4b5f',
-                                    fontWeight: '700',
-                                    fontSize: '13px',
-                                    letterSpacing: '0.08em',
-                                    padding: '10px 20px',
-                                    borderRadius: '8px',
-                                    border: 'none',
-                                    cursor: processing ? 'not-allowed' : 'pointer',
-                                    opacity: processing ? 0.7 : 1,
-                                    fontFamily: 'sans-serif',
-                                    textTransform: 'uppercase',
-                                }}
-                            >
-                                Email Password Reset Link
-                            </button>
-                        </div>
+                        <button
+                            type="submit"
+                            disabled={processing}
+                            style={{
+                                width: '100%',
+                                padding: '14px',
+                                borderRadius: '8px',
+                                border: 'none',
+                                backgroundColor: '#0ea5e9',
+                                color: 'white',
+                                fontSize: '16px',
+                                fontWeight: '700',
+                                cursor: processing ? 'not-allowed' : 'pointer',
+                                opacity: processing ? 0.7 : 1,
+                                boxShadow: '0 4px 12px rgba(14, 165, 233, 0.3)',
+                            }}
+                        >
+                            {processing ? 'Mengirim...' : 'Kirim Link Reset Password'}
+                        </button>
                     </form>
                 </div>
             </div>

@@ -6,94 +6,117 @@ export default function Dashboard({ auth }) {
         <AuthenticatedLayout header="Dashboard" auth={auth}>
             <Head title="Dashboard" />
 
-            {/*
-                Wrapper: background gambar worker.jpg.
-                - Tidak pakai minHeight 100vh agar gambar tidak overflow keluar area konten
-                - height: 100% mengikuti tinggi main element (flex-1)
-                - backgroundSize: cover + center agar gambar proporsional dan pas
-                - Overlay putih 80% agar gambar sangat pudar/samar seperti referensi
-            */}
-            <div
-                style={{
-                    flex: 1,
-                    position: 'relative',
-                    backgroundImage: "url('/Images/worker.jpg')",
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center center',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundAttachment: 'local',
-                }}
-            >
-                {/* Overlay putih tebal agar gambar sangat pudar */}
+            <div style={{ padding: '24px', backgroundColor: '#f8fafc', minHeight: 'calc(100vh - 64px)' }}>
+                {/* Header Section */}
+                <div style={{ marginBottom: '32px' }}>
+                    <h2 style={{ fontSize: '24px', fontWeight: '800', color: '#1e293b', marginBottom: '8px' }}>
+                        Ringkasan Inventaris
+                    </h2>
+                    <p style={{ color: '#64748b', fontSize: '14px' }}>
+                        Selamat datang kembali, {auth.user.name}. Berikut adalah status gudang Anda saat ini.
+                    </p>
+                </div>
+
+                {/* Stat Cards */}
                 <div
                     style={{
-                        position: 'absolute',
-                        inset: 0,
-                        backgroundColor: 'rgba(255, 255, 255, 0.80)',
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+                        gap: '24px',
+                        marginBottom: '32px',
                     }}
-                />
+                >
+                    <StatCard label="Total Barang" value={4} icon={<IconBox />} color="#0ea5e9" />
+                    <StatCard label="Barang Masuk" value={4} icon={<IconArrowIn />} color="#10b981" />
+                    <StatCard label="Barang Keluar" value={2} icon={<IconArrowOut />} color="#6366f1" />
+                    <StatCard label="Stok Menipis" value={2} icon={<IconWarning />} color="#f59e0b" />
+                </div>
 
-                {/* Content */}
-                <div style={{ position: 'relative', zIndex: 1, padding: '24px' }}>
-
-                    {/* Stat Cards */}
-                    <div
-                        style={{
-                            display: 'grid',
-                            gridTemplateColumns: 'repeat(4, 1fr)',
-                            gap: '16px',
-                            marginBottom: '16px',
-                        }}
-                    >
-                        <StatCard label="Total Barang"  value={4} icon={<IconBox />} />
-                        <StatCard label="Barang Masuk"  value={4} icon={<IconArrowIn />} />
-                        <StatCard label="Barang Keluar" value={2} icon={<IconArrowOut />} />
-                        <StatCard label="Stok Menipis"  value={2} icon={<IconWarning />} />
+                {/* Quick Actions / Recent Activity Placeholder */}
+                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px' }}>
+                    <div style={{ 
+                        backgroundColor: 'white', 
+                        padding: '24px', 
+                        borderRadius: '16px', 
+                        border: '1px solid #e2e8f0',
+                        boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
+                    }}>
+                        <h3 style={{ fontSize: '16px', fontWeight: '700', color: '#1e293b', marginBottom: '20px' }}>Aktivitas Terbaru</h3>
+                        <div style={{ textAlign: 'center', padding: '40px 0', color: '#94a3b8' }}>
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ margin: '0 auto 12px' }}>
+                                <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <p fontSize="14px">Belum ada aktivitas terbaru</p>
+                        </div>
                     </div>
 
-                    {/* Welcome banner */}
-                    <div
-                        style={{
-                            borderRadius: '12px',
-                            padding: '20px 24px',
-                            backgroundColor: '#2a5f7a',
-                        }}
-                    >
-                        <h2 style={{ fontWeight: '700', fontSize: '16px', color: 'white', margin: 0 }}>
-                            Selamat datang, {auth.user.name}!
-                        </h2>
-                        <p style={{ fontSize: '13px', color: 'white', margin: '4px 0 0 0' }}>
-                            Gunakan menu di sidebar untuk mengelola inventaris
+                    <div style={{ 
+                        backgroundColor: '#0f172a', 
+                        padding: '24px', 
+                        borderRadius: '16px',
+                        color: 'white',
+                        position: 'relative',
+                        overflow: 'hidden'
+                    }}>
+                        <div style={{ position: 'absolute', top: '-20px', right: '-20px', width: '100px', height: '100px', background: 'radial-gradient(circle, rgba(14, 165, 233, 0.2) 0%, transparent 70%)', borderRadius: '50%' }} />
+                        <h3 style={{ fontSize: '16px', fontWeight: '700', marginBottom: '16px', position: 'relative' }}>Bantuan Cepat</h3>
+                        <p style={{ fontSize: '13px', color: '#94a3b8', lineHeight: 1.6, marginBottom: '24px', position: 'relative' }}>
+                            Butuh bantuan dalam mengelola stok atau laporan? Tim dukungan kami siap membantu Anda.
                         </p>
+                        <button style={{ 
+                            width: '100%', 
+                            padding: '10px', 
+                            backgroundColor: '#0ea5e9', 
+                            border: 'none', 
+                            borderRadius: '8px', 
+                            color: 'white', 
+                            fontWeight: '600', 
+                            fontSize: '13px',
+                            cursor: 'pointer',
+                            position: 'relative'
+                        }}>
+                            Hubungi Support
+                        </button>
                     </div>
-
                 </div>
             </div>
         </AuthenticatedLayout>
     );
 }
 
-function StatCard({ label, value, icon }) {
+function StatCard({ label, value, icon, color }) {
     return (
         <div
             style={{
-                backgroundColor: '#b8cdd9',
-                border: '1.5px solid #9ab8c8',
-                borderRadius: '12px',
-                padding: '16px 20px',
-                minHeight: '110px',
+                backgroundColor: 'white',
+                border: '1px solid #e2e8f0',
+                borderRadius: '16px',
+                padding: '24px',
                 display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
+                alignItems: 'center',
+                gap: '20px',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+                transition: 'transform 0.2s',
             }}
+            onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-4px)'}
+            onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
         >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <span style={{ fontWeight: '700', fontSize: '14px', color: '#1a2e40' }}>{label}</span>
-                <span style={{ color: '#1a2e40' }}>{icon}</span>
+            <div style={{ 
+                width: '56px', 
+                height: '56px', 
+                borderRadius: '12px', 
+                backgroundColor: `${color}15`, 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                color: color
+            }}>
+                {icon}
             </div>
-            <p style={{ fontWeight: '900', fontSize: '42px', color: '#111827', lineHeight: 1, margin: 0 }}>
-                {value}
-            </p>
+            <div>
+                <p style={{ fontSize: '14px', fontWeight: '600', color: '#64748b', marginBottom: '4px' }}>{label}</p>
+                <p style={{ fontSize: '28px', fontWeight: '800', color: '#1e293b', lineHeight: 1 }}>{value}</p>
+            </div>
         </div>
     );
 }

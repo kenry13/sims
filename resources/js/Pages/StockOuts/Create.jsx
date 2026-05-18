@@ -45,157 +45,186 @@ export default function Create({ items }) {
         <AuthenticatedLayout header="Catat Barang Keluar">
             <Head title="Catat Barang Keluar" />
 
-            <div
-                style={{
-                    flex: 1,
-                    position: 'relative',
-                    backgroundImage: "url('/Images/worker.jpg')",
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center center',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundAttachment: 'local',
-                    minHeight: '100%',
-                }}
-            >
-                {/* Overlay */}
-                <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(255,255,255,0.80)' }} />
+            <div style={{ padding: '40px 24px', backgroundColor: '#f8fafc', minHeight: 'calc(100vh - 64px)', display: 'flex', justifyContent: 'center' }}>
+                <div style={{ width: '100%', maxWidth: '700px' }}>
+                    {/* Back Button */}
+                    <Link
+                        href="/stock-outs"
+                        style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            color: '#64748b',
+                            textDecoration: 'none',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            marginBottom: '20px',
+                            transition: 'color 0.2s'
+                        }}
+                        onMouseEnter={e => e.currentTarget.style.color = '#0ea5e9'}
+                        onMouseLeave={e => e.currentTarget.style.color = '#64748b'}
+                    >
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        Kembali ke Riwayat
+                    </Link>
 
-                {/* Centered content */}
-                <div style={{
-                    position: 'relative',
-                    zIndex: 1,
-                    padding: '40px 24px',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'flex-start',
-                }}>
-                    <div style={{ width: '100%', maxWidth: '700px' }}>
-                        <div style={{
-                            backgroundColor: '#2a5f7a',
-                            borderRadius: '12px',
-                            padding: '28px',
-                            boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
-                            border: '1.5px solid #2a3f54',
-                        }}>
-                            <form onSubmit={handleSubmit}>
-
-                                {/* Pilih Barang */}
-                                <div style={{ marginBottom: '18px' }}>
-                                    <label style={labelStyle}>Pilih Barang <span style={{ color: '#fca5a5' }}>*</span></label>
-                                    <select
-                                        value={data.item_id}
-                                        onChange={e => setData('item_id', e.target.value)}
-                                        style={inputStyle}
-                                    >
-                                        <option value="" style={{ backgroundColor: '#2a5f7a' }}>-- Pilih Barang --</option>
-                                        {items.map(item => (
-                                            <option key={item.id} value={item.id} style={{ backgroundColor: '#2a5f7a' }}>
-                                                {item.name} (Stok: {item.stock} {item.unit})
-                                            </option>
-                                        ))}
-                                    </select>
-                                    {errors.item_id && <p style={{ color: '#fca5a5', fontSize: '12px', marginTop: '4px' }}>{errors.item_id}</p>}
-                                </div>
-
-                                {/* Info stok saat ini + warning */}
-                                {selectedItem && (
-                                    <div style={{
-                                        backgroundColor: selectedItem.stock <= selectedItem.min_stock
-                                            ? 'rgba(220,38,38,0.20)'
-                                            : 'rgba(255,255,255,0.12)',
-                                        border: selectedItem.stock <= selectedItem.min_stock
-                                            ? '1.5px solid rgba(220,38,38,0.50)'
-                                            : '1.5px solid rgba(255,255,255,0.30)',
-                                        borderRadius: '8px',
-                                        padding: '10px 14px',
-                                        fontSize: '13px',
-                                        color: '#ffffff',
-                                        marginBottom: '18px',
-                                    }}>
-                                        Stok tersedia: <strong>{selectedItem.stock} {selectedItem.unit}</strong>
-                                        {selectedItem.stock <= selectedItem.min_stock && (
-                                            <span style={{ marginLeft: '8px' }}>⚠ Stok sudah menipis!</span>
-                                        )}
-                                    </div>
-                                )}
-
-                                {/* Jumlah & Tanggal */}
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '18px' }}>
-                                    <div>
-                                        <label style={labelStyle}>Jumlah <span style={{ color: '#fca5a5' }}>*</span></label>
-                                        <input
-                                            type="number"
-                                            value={data.quantity}
-                                            onChange={e => setData('quantity', e.target.value)}
-                                            min="1"
-                                            max={selectedItem?.stock ?? undefined}
-                                            style={inputStyle}
-                                        />
-                                        {errors.quantity && <p style={{ color: '#fca5a5', fontSize: '12px', marginTop: '4px' }}>{errors.quantity}</p>}
-                                    </div>
-                                    <div>
-                                        <label style={labelStyle}>Tanggal <span style={{ color: '#fca5a5' }}>*</span></label>
-                                        <input
-                                            type="date"
-                                            value={data.date}
-                                            onChange={e => setData('date', e.target.value)}
-                                            style={inputStyle}
-                                        />
-                                        {errors.date && <p style={{ color: '#fca5a5', fontSize: '12px', marginTop: '4px' }}>{errors.date}</p>}
-                                    </div>
-                                </div>
-
-                                {/* Keterangan */}
-                                <div style={{ marginBottom: '24px' }}>
-                                    <label style={labelStyle}>Keterangan</label>
-                                    <textarea
-                                        value={data.note}
-                                        onChange={e => setData('note', e.target.value)}
-                                        rows={4}
-                                        placeholder="Opsional..."
-                                        style={{ ...inputStyle, resize: 'vertical' }}
-                                    />
-                                </div>
-
-                                {/* Tombol */}
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                                    <button
-                                        type="submit"
-                                        disabled={processing}
-                                        style={{
-                                            backgroundColor: 'rgba(220, 38, 38, 0.85)',
-                                            color: '#ffffff',
-                                            fontSize: '13px',
-                                            fontWeight: '700',
-                                            padding: '10px 22px',
-                                            borderRadius: '8px',
-                                            border: '2px solid rgba(255,255,255,0.40)',
-                                            cursor: processing ? 'not-allowed' : 'pointer',
-                                            opacity: processing ? 0.6 : 1,
-                                            letterSpacing: '0.3px',
-                                        }}
-                                    >
-                                        {processing ? 'Menyimpan...' : 'Catat Keluar'}
-                                    </button>
-                                    <Link href="/stock-outs" style={{ fontSize: '13px', color: 'rgb(255, 255, 255)', textDecoration: 'none' }}>
-                                        Batal
-                                    </Link>
-                                </div>
-
-                            </form>
+                    <div style={{
+                        backgroundColor: 'white',
+                        borderRadius: '20px',
+                        padding: '40px',
+                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                        border: '1px solid #e2e8f0',
+                    }}>
+                        <div style={{ marginBottom: '32px' }}>
+                            <h2 style={{ fontSize: '20px', fontWeight: '800', color: '#1e293b' }}>Transaksi Barang Keluar</h2>
+                            <p style={{ color: '#64748b', fontSize: '14px', marginTop: '4px' }}>Catat pengurangan stok barang di bawah ini.</p>
                         </div>
+
+                        <form onSubmit={handleSubmit}>
+                            {/* Pilih Barang */}
+                            <div style={{ marginBottom: '24px' }}>
+                                <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#475569', marginBottom: '8px' }}>Pilih Barang <span style={{ color: '#ef4444' }}>*</span></label>
+                                <select 
+                                    value={data.item_id} 
+                                    onChange={e => setData('item_id', e.target.value)}
+                                    style={{
+                                        width: '100%',
+                                        padding: '12px 16px',
+                                        borderRadius: '10px',
+                                        border: '1px solid #e2e8f0',
+                                        backgroundColor: '#f8fafc',
+                                        fontSize: '15px',
+                                        outline: 'none',
+                                        cursor: 'pointer',
+                                    }}
+                                >
+                                    <option value="">-- Pilih Barang --</option>
+                                    {items.map(item => (
+                                        <option key={item.id} value={item.id}>
+                                            {item.name} (Stok: {item.stock} {item.unit})
+                                        </option>
+                                    ))}
+                                </select>
+                                {errors.item_id && <p style={{ color: '#ef4444', fontSize: '12px', marginTop: '6px' }}>{errors.item_id}</p>}
+                            </div>
+
+                            {/* Info stok saat ini + warning (Alert-like) */}
+                            {selectedItem && (
+                                <div style={{ 
+                                    marginBottom: '24px', 
+                                    padding: '12px 16px', 
+                                    backgroundColor: selectedItem.stock <= selectedItem.min_stock ? '#fff1f2' : '#f0f9ff', 
+                                    borderRadius: '10px', 
+                                    border: `1px solid ${selectedItem.stock <= selectedItem.min_stock ? '#fecdd3' : '#bae6fd'}`,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '12px'
+                                }}>
+                                    <div style={{ color: selectedItem.stock <= selectedItem.min_stock ? '#ef4444' : '#0ea5e9' }}>
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            {selectedItem.stock <= selectedItem.min_stock ? (
+                                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0zM12 9v4M12 17h.01" />
+                                            ) : (
+                                                <><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></>
+                                            )}
+                                        </svg>
+                                    </div>
+                                    <p style={{ fontSize: '13px', color: selectedItem.stock <= selectedItem.min_stock ? '#991b1b' : '#0369a1', margin: 0 }}>
+                                        Stok saat ini: <strong>{selectedItem.stock} {selectedItem.unit}</strong>
+                                        {selectedItem.stock <= selectedItem.min_stock && ' (Peringatan: Stok menipis!)'}
+                                    </p>
+                                </div>
+                            )}
+
+                            {/* Jumlah & Tanggal */}
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '24px' }}>
+                                <div>
+                                    <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#475569', marginBottom: '8px' }}>Jumlah Keluar <span style={{ color: '#ef4444' }}>*</span></label>
+                                    <input 
+                                        type="number" 
+                                        value={data.quantity} 
+                                        onChange={e => setData('quantity', e.target.value)}
+                                        min="1"
+                                        max={selectedItem?.stock || 9999}
+                                        style={{
+                                            width: '100%',
+                                            padding: '12px 16px',
+                                            borderRadius: '10px',
+                                            border: '1px solid #e2e8f0',
+                                            backgroundColor: '#f8fafc',
+                                            fontSize: '15px',
+                                            outline: 'none',
+                                        }}
+                                    />
+                                    {errors.quantity && <p style={{ color: '#ef4444', fontSize: '12px', marginTop: '6px' }}>{errors.quantity}</p>}
+                                </div>
+                                <div>
+                                    <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#475569', marginBottom: '8px' }}>Tanggal <span style={{ color: '#ef4444' }}>*</span></label>
+                                    <input 
+                                        type="date" 
+                                        value={data.date} 
+                                        onChange={e => setData('date', e.target.value)}
+                                        style={{
+                                            width: '100%',
+                                            padding: '12px 16px',
+                                            borderRadius: '10px',
+                                            border: '1px solid #e2e8f0',
+                                            backgroundColor: '#f8fafc',
+                                            fontSize: '15px',
+                                            outline: 'none',
+                                        }}
+                                    />
+                                    {errors.date && <p style={{ color: '#ef4444', fontSize: '12px', marginTop: '6px' }}>{errors.date}</p>}
+                                </div>
+                            </div>
+
+                            {/* Keterangan */}
+                            <div style={{ marginBottom: '32px' }}>
+                                <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#475569', marginBottom: '8px' }}>Keterangan / Catatan</label>
+                                <textarea 
+                                    value={data.note} 
+                                    onChange={e => setData('note', e.target.value)}
+                                    rows="3"
+                                    placeholder="Opsional..."
+                                    style={{
+                                        width: '100%',
+                                        padding: '12px 16px',
+                                        borderRadius: '10px',
+                                        border: '1px solid #e2e8f0',
+                                        backgroundColor: '#f8fafc',
+                                        fontSize: '15px',
+                                        outline: 'none',
+                                        resize: 'vertical',
+                                    }}
+                                ></textarea>
+                                {errors.note && <p style={{ color: '#ef4444', fontSize: '12px', marginTop: '6px' }}>{errors.note}</p>}
+                            </div>
+
+                            <button
+                                type="submit"
+                                disabled={processing}
+                                style={{
+                                    width: '100%',
+                                    padding: '14px',
+                                    borderRadius: '12px',
+                                    backgroundColor: '#0ea5e9',
+                                    color: 'white',
+                                    fontSize: '16px',
+                                    fontWeight: '700',
+                                    border: 'none',
+                                    cursor: processing ? 'not-allowed' : 'pointer',
+                                    opacity: processing ? 0.7 : 1,
+                                    boxShadow: '0 10px 15px -3px rgba(14, 165, 233, 0.3)',
+                                    transition: 'all 0.2s',
+                                }}
+                                onMouseEnter={e => { if(!processing) e.target.style.backgroundColor = '#0284c7'; }}
+                                onMouseLeave={e => { if(!processing) e.target.style.backgroundColor = '#0ea5e9'; }}
+                            >
+                                {processing ? 'Menyimpan...' : 'Simpan Transaksi'}
+                            </button>
+                        </form>
                     </div>
                 </div>
-
-                {/* Fix placeholder & select option colors */}
-                <style>{`
-                    input::placeholder, textarea::placeholder {
-                        color: rgba(255,255,255,0.45) !important;
-                    }
-                    input[type="date"]::-webkit-calendar-picker-indicator {
-                        filter: invert(1);
-                    }
-                `}</style>
             </div>
         </AuthenticatedLayout>
     );

@@ -12,198 +12,164 @@ export default function Index({ suppliers }) {
         <AuthenticatedLayout header="Data Supplier">
             <Head title="Data Supplier" />
 
-            <div
-                style={{
-                    flex: 1,
-                    position: 'relative',
-                    backgroundImage: "url('/Images/worker.jpg')",
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center center',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundAttachment: 'local',
-                }}
-            >
-                {/* Overlay putih tebal */}
-                <div
-                    style={{
-                        position: 'absolute',
-                        inset: 0,
-                        backgroundColor: 'rgba(255, 255, 255, 0.80)',
-                    }}
-                />
-
-                {/* Content */}
-                <div style={{ position: 'relative', zIndex: 1, padding: '24px' }}>
-
-                    {/* Header + Tombol Tambah */}
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-                        <p style={{ margin: 0, fontSize: '15px', color: '#374151' }}>
-                            Total {suppliers.total} supplier terdaftar
+            <div style={{ padding: '24px', backgroundColor: '#f8fafc', minHeight: 'calc(100vh - 64px)' }}>
+                {/* Header Action Section */}
+                <div style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'space-between', 
+                    marginBottom: '24px',
+                    backgroundColor: 'white',
+                    padding: '20px 24px',
+                    borderRadius: '16px',
+                    border: '1px solid #e2e8f0',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
+                }}>
+                    <div>
+                        <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#1e293b' }}>Daftar Supplier</h2>
+                        <p style={{ margin: 0, fontSize: '14px', color: '#64748b' }}>
+                            Total {suppliers.total} supplier terdaftar dalam sistem
                         </p>
-                        <Link
-                            href="/suppliers/create"
-                            style={{
-                                display: 'inline-block',
-                                padding: '8px 16px',
-                                fontSize: '13px',
-                                fontWeight: '600',
-                                color: '#1e3448',
-                                backgroundColor: '#e0f2f8',
-                                border: '1.5px solid #a0cfe0',
-                                borderRadius: '8px',
-                                textDecoration: 'none',
-                                boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
-                            }}
-                        >
-                            + Tambah Supplier
-                        </Link>
                     </div>
+                    <Link
+                        href="/suppliers/create"
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            padding: '10px 20px',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            color: 'white',
+                            backgroundColor: '#0ea5e9',
+                            borderRadius: '10px',
+                            textDecoration: 'none',
+                            boxShadow: '0 4px 12px rgba(14, 165, 233, 0.2)',
+                            transition: 'all 0.2s',
+                        }}
+                    >
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Tambah Supplier
+                    </Link>
+                </div>
 
-                    {/* Tabel */}
-                    <div style={{ borderRadius: '12px', overflow: 'hidden', border: '1.5px solid #2a3f54' }}>
-                        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
-                            <thead>
-                                <tr style={{
-                                    backgroundColor: '#2a5f7a',
-                                    borderBottom: '3px solid #000000',
-                                }}>
-                                    {['No', 'Nama Supplier', 'No. Telepon', 'Alamat', 'Jumlah Barang', 'Aksi'].map((col) => (
-                                        <th key={col} style={{
-                                            padding: '14px 16px',
-                                            color: '#ffffff',
-                                            fontWeight: '700',
-                                            fontSize: '13px',
-                                            textAlign: col === 'Aksi' || col === 'Jumlah Barang' ? 'center' : 'left',
-                                            whiteSpace: 'nowrap',
-                                        }}>
-                                            {col}
-                                        </th>
-                                    ))}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {suppliers.data.length === 0 ? (
-                                    <tr>
-                                        <td colSpan={6} style={{ padding: '32px', textAlign: 'center', color: '#ffffff', backgroundColor: '#1e3448' }}>
-                                            Belum ada data supplier
-                                        </td>
-                                    </tr>
-                                ) : (
-                                    suppliers.data.map((sup, i) => {
-                                        const isLast = i === suppliers.data.length - 1;
-                                        return (
-                                            <tr
-                                                key={sup.id}
-                                                style={{
-                                                    backgroundColor: '#2a5f7a',
-                                                    borderBottom: isLast ? 'none' : '1px solid #000000',
-                                                }}
-                                                onMouseEnter={e => e.currentTarget.style.backgroundColor = '#2a4a60'}
-                                                onMouseLeave={e => e.currentTarget.style.backgroundColor = '#2a5f7a'}
-                                            >
-                                                {/* No */}
-                                                <td style={{ padding: '13px 16px', color: '#ffffff', fontWeight: '500' }}>
-                                                    {(suppliers.current_page - 1) * suppliers.per_page + i + 1}
-                                                </td>
-
-                                                {/* Nama Supplier */}
-                                                <td style={{ padding: '13px 16px', color: '#ffffff', fontWeight: '500' }}>{sup.name}</td>
-
-                                                {/* No. Telepon */}
-                                                <td style={{ padding: '13px 16px', color: '#ffffff' }}>{sup.phone ?? '-'}</td>
-
-                                                {/* Alamat */}
-                                                <td style={{ padding: '13px 16px', color: '#ffffff' }}>{sup.address ?? '-'}</td>
-
-                                                {/* Jumlah Barang — badge biru sesuai gambar */}
-                                                <td style={{ padding: '13px 16px', textAlign: 'center' }}>
-                                                    <span style={{
-                                                        display: 'inline-block',
-                                                        padding: '3px 14px',
-                                                        fontSize: '12px',
-                                                        fontWeight: '600',
-                                                        color: '#ffffff',
-                                                        backgroundColor: '#2563eb',
-                                                        borderRadius: '6px',
-                                                    }}>
-                                                        {sup.items_count} Barang
-                                                    </span>
-                                                </td>
-
-                                                {/* Aksi */}
-                                                <td style={{ padding: '13px 16px', textAlign: 'center', whiteSpace: 'nowrap' }}>
-                                                    <div style={{
-                                                        display: 'inline-flex',
-                                                        borderRadius: '6px',
-                                                        overflow: 'hidden',
-                                                        border: '1px solid #d1d5db',
-                                                    }}>
-                                                        <Link
-                                                            href={`/suppliers/${sup.id}/edit`}
-                                                            style={{
-                                                                fontSize: '12px',
-                                                                fontWeight: '500',
-                                                                color: '#1e3448',
-                                                                backgroundColor: '#ffffff',
-                                                                padding: '5px 12px',
-                                                                textDecoration: 'none',
-                                                                borderRight: '1px solid #d1d5db',
-                                                            }}
-                                                        >
-                                                            Edit
-                                                        </Link>
-                                                        <button
-                                                            onClick={() => handleDelete(sup.id)}
-                                                            style={{
-                                                                fontSize: '12px',
-                                                                fontWeight: '500',
-                                                                color: '#dc2626',
-                                                                backgroundColor: '#ffffff',
-                                                                border: 'none',
-                                                                cursor: 'pointer',
-                                                                padding: '5px 10px',
-                                                            }}
-                                                        >
-                                                            Hapus
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        );
-                                    })
-                                )}
-                            </tbody>
-                        </table>
-
-                        {/* Pagination */}
-                        {suppliers.last_page > 1 && (
-                            <div style={{
-                                padding: '12px 16px',
-                                borderTop: '1px solid #e5e7eb',
-                                backgroundColor: '#1e3448',
-                                display: 'flex', alignItems: 'center', gap: '6px',
-                            }}>
-                                {suppliers.links.map((link, i) => (
-                                    <Link
-                                        key={i}
-                                        href={link.url ?? '#'}
-                                        style={{
-                                            padding: '4px 10px',
-                                            borderRadius: '6px',
-                                            fontSize: '13px',
-                                            textDecoration: 'none',
-                                            backgroundColor: link.active ? '#ffffff' : 'transparent',
-                                            color: link.active ? '#1e3448' : '#ffffff',
-                                            pointerEvents: link.url ? 'auto' : 'none',
-                                            opacity: link.url ? 1 : 0.4,
-                                        }}
-                                        dangerouslySetInnerHTML={{ __html: link.label }}
-                                    />
+                {/* Table Section */}
+                <div style={{ 
+                    backgroundColor: 'white', 
+                    borderRadius: '16px', 
+                    overflow: 'hidden', 
+                    border: '1px solid #e2e8f0',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
+                }}>
+                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
+                        <thead>
+                            <tr style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
+                                {['No', 'Nama Supplier', 'No. Telepon', 'Alamat', 'Jumlah Barang', 'Aksi'].map((col) => (
+                                    <th key={col} style={{
+                                        padding: '16px 20px',
+                                        color: '#64748b',
+                                        fontWeight: '600',
+                                        textAlign: col === 'Aksi' || col === 'Jumlah Barang' ? 'center' : 'left',
+                                        whiteSpace: 'nowrap',
+                                    }}>
+                                        {col}
+                                    </th>
                                 ))}
-                            </div>
-                        )}
-                    </div>
-
+                            </tr>
+                        </thead>
+                        <tbody style={{ color: '#1e293b' }}>
+                            {suppliers.data.length === 0 ? (
+                                <tr>
+                                    <td colSpan={6} style={{ padding: '48px', textAlign: 'center', color: '#94a3b8' }}>
+                                        Belum ada data supplier
+                                    </td>
+                                </tr>
+                            ) : (
+                                suppliers.data.map((sup, i) => {
+                                    return (
+                                        <tr key={sup.id} style={{ borderBottom: i === suppliers.data.length - 1 ? 'none' : '1px solid #f1f5f9' }}>
+                                            <td style={{ padding: '16px 20px', color: '#64748b' }}>{suppliers.from + i}</td>
+                                            <td style={{ padding: '16px 20px', fontWeight: '600' }}>{sup.name}</td>
+                                            <td style={{ padding: '16px 20px' }}>{sup.phone || '-'}</td>
+                                            <td style={{ padding: '16px 20px' }}>{sup.address || '-'}</td>
+                                            <td style={{ padding: '16px 20px', textAlign: 'center', fontWeight: '700' }}>{sup.items_count || 0}</td>
+                                            <td style={{ padding: '16px 20px', textAlign: 'center' }}>
+                                                <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
+                                                    <Link
+                                                        href={`/suppliers/${sup.id}/edit`}
+                                                        style={{
+                                                            padding: '6px',
+                                                            borderRadius: '6px',
+                                                            backgroundColor: '#f1f5f9',
+                                                            color: '#64748b',
+                                                            transition: 'all 0.2s',
+                                                        }}
+                                                        onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#e2e8f0'; e.currentTarget.style.color = '#0ea5e9'; }}
+                                                        onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#f1f5f9'; e.currentTarget.style.color = '#64748b'; }}
+                                                    >
+                                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                                    </Link>
+                                                    <button
+                                                        onClick={() => handleDelete(sup.id)}
+                                                        style={{
+                                                            padding: '6px',
+                                                            borderRadius: '6px',
+                                                            backgroundColor: '#fef2f2',
+                                                            color: '#ef4444',
+                                                            border: 'none',
+                                                            cursor: 'pointer',
+                                                            transition: 'all 0.2s',
+                                                        }}
+                                                        onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#fee2e2'; }}
+                                                        onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#fef2f2'; }}
+                                                    >
+                                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    );
+                                })
+                            )}
+                        </tbody>
+                    </table>
+                    
+                    {/* Pagination Section */}
+                    {suppliers.last_page > 1 && (
+                        <div style={{
+                            padding: '16px 20px',
+                            borderTop: '1px solid #f1f5f9',
+                            backgroundColor: '#ffffff',
+                            display: 'flex', 
+                            justifyContent: 'center',
+                            alignItems: 'center', 
+                            gap: '8px',
+                        }}>
+                            {suppliers.links.map((link, i) => (
+                                <Link
+                                    key={i}
+                                    href={link.url ?? '#'}
+                                    style={{
+                                        padding: '8px 14px',
+                                        borderRadius: '8px',
+                                        fontSize: '13px',
+                                        fontWeight: '600',
+                                        textDecoration: 'none',
+                                        backgroundColor: link.active ? '#0ea5e9' : 'transparent',
+                                        color: link.active ? '#ffffff' : '#64748b',
+                                        border: link.active ? '1px solid #0ea5e9' : '1px solid #e2e8f0',
+                                        pointerEvents: link.url ? 'auto' : 'none',
+                                        opacity: link.url ? 1 : 0.5,
+                                        transition: 'all 0.2s'
+                                    }}
+                                    dangerouslySetInnerHTML={{ __html: link.label }}
+                                />
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
         </AuthenticatedLayout>

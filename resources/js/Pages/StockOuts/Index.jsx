@@ -12,177 +12,152 @@ export default function Index({ stockOuts }) {
         <AuthenticatedLayout header="Barang Keluar">
             <Head title="Barang Keluar" />
 
-            {/* Wrapper dengan background image + overlay, persis seperti Index Barang Masuk */}
-            <div
-                style={{
-                    flex: 1,
-                    position: 'relative',
-                    backgroundImage: "url('/Images/worker.jpg')",
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center center',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundAttachment: 'local',
-                }}
-            >
-                {/* Overlay putih tebal agar gambar sangat pudar */}
-                <div
-                    style={{
-                        position: 'absolute',
-                        inset: 0,
-                        backgroundColor: 'rgba(255, 255, 255, 0.80)',
-                    }}
-                />
-
-                {/* Content */}
-                <div style={{ position: 'relative', zIndex: 1, padding: '24px' }}>
-
-                    {/* Header + Tombol Tambah */}
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-                        <p style={{ margin: 0, fontSize: '15px', color: '#374151' }}>
-                            Total {stockOuts.total} transaksi keluar
+            <div style={{ padding: '24px', backgroundColor: '#f8fafc', minHeight: 'calc(100vh - 64px)' }}>
+                {/* Header Action Section */}
+                <div style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'space-between', 
+                    marginBottom: '24px',
+                    backgroundColor: 'white',
+                    padding: '20px 24px',
+                    borderRadius: '16px',
+                    border: '1px solid #e2e8f0',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
+                }}>
+                    <div>
+                        <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#1e293b' }}>Riwayat Barang Keluar</h2>
+                        <p style={{ margin: 0, fontSize: '14px', color: '#64748b' }}>
+                            Total {stockOuts.total} transaksi keluar tercatat
                         </p>
-                        <Link
-                            href="/stock-outs/create"
-                            style={{
-                                display: 'inline-block',
-                                padding: '8px 16px',
-                                fontSize: '13px',
-                                fontWeight: '600',
-                                color: '#1e3448',
-                                backgroundColor: '#e0f2f8',
-                                border: '1.5px solid #a0cfe0',
-                                borderRadius: '8px',
-                                textDecoration: 'none',
-                                boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
-                            }}
-                        >
-                            + Catat Barang Keluar
-                        </Link>
                     </div>
+                    <Link
+                        href="/stock-outs/create"
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            padding: '10px 20px',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            color: 'white',
+                            backgroundColor: '#0ea5e9',
+                            borderRadius: '10px',
+                            textDecoration: 'none',
+                            boxShadow: '0 4px 12px rgba(14, 165, 233, 0.2)',
+                            transition: 'all 0.2s',
+                        }}
+                    >
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Catat Barang Keluar
+                    </Link>
+                </div>
 
-                    {/* Tabel */}
-                    <div style={{ borderRadius: '12px', overflow: 'hidden', border: '1.5px solid #2a3f54' }}>
-                        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
-                            <thead>
-                                <tr style={{
-                                    backgroundColor: '#2a5f7a',
-                                    borderBottom: '3px solid #000000',
-                                }}>
-                                    {['Tanggal', 'Nama Barang', 'Jumlah', 'Dicatat Oleh', 'Keterangan', 'Aksi'].map((col) => (
-                                        <th key={col} style={{
-                                            padding: '14px 16px',
-                                            color: '#ffffff',
-                                            fontWeight: '700',
-                                            fontSize: '13px',
-                                            textAlign: col === 'Aksi' || col === 'Jumlah' ? 'center' : 'left',
-                                            whiteSpace: 'nowrap',
-                                        }}>
-                                            {col}
-                                        </th>
-                                    ))}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {stockOuts.data.length === 0 ? (
-                                    <tr>
-                                        <td colSpan={6} style={{ padding: '32px', textAlign: 'center', color: '#ffffff', backgroundColor: '#1e3448' }}>
-                                            Belum ada transaksi barang keluar
-                                        </td>
-                                    </tr>
-                                ) : (
-                                    stockOuts.data.map((s, i) => {
-                                        const isLast = i === stockOuts.data.length - 1;
-                                        return (
-                                            <tr
-                                                key={s.id}
-                                                style={{
-                                                    backgroundColor: '#2a5f7a',
-                                                    borderBottom: isLast ? 'none' : '1px solid #000000',
-                                                }}
-                                                onMouseEnter={e => e.currentTarget.style.backgroundColor = '#2a4a60'}
-                                                onMouseLeave={e => e.currentTarget.style.backgroundColor = '#2a5f7a'}
-                                            >
-                                                <td style={{ padding: '13px 16px', color: '#ffffff', fontWeight: '500' }}>{s.date}</td>
-                                                <td style={{ padding: '13px 16px', color: '#ffffff', fontWeight: '500' }}>{s.item?.name ?? '-'}</td>
-
-                                                {/* Jumlah — badge merah */}
-                                                <td style={{ padding: '13px 16px', textAlign: 'center' }}>
-                                                    <span style={{
-                                                        display: 'inline-block',
-                                                        padding: '3px 12px',
-                                                        fontSize: '12px',
-                                                        fontWeight: '600',
-                                                        color: '#ffffff',
-                                                        backgroundColor: '#dc2626',
-                                                        borderRadius: '6px',
-                                                    }}>
-                                                        -{s.quantity} {s.item?.unit}
-                                                    </span>
-                                                </td>
-
-                                                <td style={{ padding: '13px 16px', color: '#ffffff' }}>{s.user?.name ?? '-'}</td>
-                                                <td style={{ padding: '13px 16px', color: '#ffffff' }}>{s.note ?? '--'}</td>
-
-                                                {/* Aksi — tombol hapus */}
-                                                <td style={{ padding: '13px 16px', textAlign: 'center', whiteSpace: 'nowrap' }}>
-                                                    <div style={{
-                                                        display: 'inline-flex',
-                                                        borderRadius: '6px',
-                                                        overflow: 'hidden',
-                                                        border: '1px solid #d1d5db',
-                                                    }}>
-                                                        <button
-                                                            onClick={() => handleDelete(s.id)}
-                                                            style={{
-                                                                fontSize: '12px',
-                                                                fontWeight: '500',
-                                                                color: '#dc2626',
-                                                                backgroundColor: '#ffffff',
-                                                                border: 'none',
-                                                                cursor: 'pointer',
-                                                                padding: '5px 10px',
-                                                            }}
-                                                        >
-                                                            Hapus
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        );
-                                    })
-                                )}
-                            </tbody>
-                        </table>
-
-                        {/* Pagination */}
-                        {stockOuts.last_page > 1 && (
-                            <div style={{
-                                padding: '12px 16px',
-                                borderTop: '1px solid #e5e7eb',
-                                backgroundColor: '#1e3448',
-                                display: 'flex', alignItems: 'center', gap: '6px',
-                            }}>
-                                {stockOuts.links.map((link, i) => (
-                                    <Link
-                                        key={i}
-                                        href={link.url ?? '#'}
-                                        style={{
-                                            padding: '4px 10px',
-                                            borderRadius: '6px',
-                                            fontSize: '13px',
-                                            textDecoration: 'none',
-                                            backgroundColor: link.active ? '#ffffff' : 'transparent',
-                                            color: link.active ? '#1e3448' : '#ffffff',
-                                            pointerEvents: link.url ? 'auto' : 'none',
-                                            opacity: link.url ? 1 : 0.4,
-                                        }}
-                                        dangerouslySetInnerHTML={{ __html: link.label }}
-                                    />
+                {/* Table Section */}
+                <div style={{ 
+                    backgroundColor: 'white', 
+                    borderRadius: '16px', 
+                    overflow: 'hidden', 
+                    border: '1px solid #e2e8f0',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
+                }}>
+                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
+                        <thead>
+                            <tr style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
+                                {['Tanggal', 'Nama Barang', 'Jumlah', 'Dicatat Oleh', 'Keterangan', 'Aksi'].map((col) => (
+                                    <th key={col} style={{
+                                        padding: '16px 20px',
+                                        color: '#64748b',
+                                        fontWeight: '600',
+                                        textAlign: col === 'Aksi' || col === 'Jumlah' ? 'center' : 'left',
+                                        whiteSpace: 'nowrap',
+                                    }}>
+                                        {col}
+                                    </th>
                                 ))}
-                            </div>
-                        )}
-                    </div>
-
+                            </tr>
+                        </thead>
+                        <tbody style={{ color: '#1e293b' }}>
+                            {stockOuts.data.length === 0 ? (
+                                <tr>
+                                    <td colSpan={6} style={{ padding: '48px', textAlign: 'center', color: '#94a3b8' }}>
+                                        Belum ada transaksi barang keluar
+                                    </td>
+                                </tr>
+                            ) : (
+                                stockOuts.data.map((s, i) => {
+                                    return (
+                                        <tr key={s.id} style={{ borderBottom: i === stockOuts.data.length - 1 ? 'none' : '1px solid #f1f5f9' }}>
+                                            <td style={{ padding: '16px 20px', color: '#64748b' }}>
+                                                {new Date(s.created_at).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}
+                                            </td>
+                                            <td style={{ padding: '16px 20px', fontWeight: '600' }}>{s.item?.name}</td>
+                                            <td style={{ padding: '16px 20px', textAlign: 'center', fontWeight: '700', color: '#ef4444' }}>
+                                                -{s.quantity}
+                                            </td>
+                                            <td style={{ padding: '16px 20px' }}>{s.user?.name}</td>
+                                            <td style={{ padding: '16px 20px', fontSize: '13px', color: '#64748b' }}>{s.description || '-'}</td>
+                                            <td style={{ padding: '16px 20px', textAlign: 'center' }}>
+                                                <button
+                                                    onClick={() => handleDelete(s.id)}
+                                                    style={{
+                                                        padding: '6px',
+                                                        borderRadius: '6px',
+                                                        backgroundColor: '#fef2f2',
+                                                        color: '#ef4444',
+                                                        border: 'none',
+                                                        cursor: 'pointer',
+                                                        transition: 'all 0.2s',
+                                                    }}
+                                                    onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#fee2e2'; }}
+                                                    onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#fef2f2'; }}
+                                                >
+                                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    );
+                                })
+                            )}
+                        </tbody>
+                    </table>
+                    
+                    {/* Pagination Section */}
+                    {stockOuts.last_page > 1 && (
+                        <div style={{
+                            padding: '16px 20px',
+                            borderTop: '1px solid #f1f5f9',
+                            backgroundColor: '#ffffff',
+                            display: 'flex', 
+                            justifyContent: 'center',
+                            alignItems: 'center', 
+                            gap: '8px',
+                        }}>
+                            {stockOuts.links.map((link, i) => (
+                                <Link
+                                    key={i}
+                                    href={link.url ?? '#'}
+                                    style={{
+                                        padding: '8px 14px',
+                                        borderRadius: '8px',
+                                        fontSize: '13px',
+                                        fontWeight: '600',
+                                        textDecoration: 'none',
+                                        backgroundColor: link.active ? '#0ea5e9' : 'transparent',
+                                        color: link.active ? '#ffffff' : '#64748b',
+                                        border: link.active ? '1px solid #0ea5e9' : '1px solid #e2e8f0',
+                                        pointerEvents: link.url ? 'auto' : 'none',
+                                        opacity: link.url ? 1 : 0.5,
+                                        transition: 'all 0.2s'
+                                    }}
+                                    dangerouslySetInnerHTML={{ __html: link.label }}
+                                />
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
         </AuthenticatedLayout>

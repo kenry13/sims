@@ -10,7 +10,7 @@ export default function Welcome({ auth }) {
                 {/* ── HEADER ─────────────────────────────────────────────── */}
                 <header
                     style={{
-                        background: '#2a5f7a',
+                        background: '#1e293b',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
@@ -18,36 +18,42 @@ export default function Welcome({ auth }) {
                         height: '64px',
                         position: 'relative',
                         zIndex: 10,
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='64'%3E%3Cpath d='M0 32 Q25 10 50 32 Q75 54 100 32 Q125 10 150 32 Q175 54 200 32' stroke='rgba(255,255,255,0.08)' stroke-width='1.5' fill='none'/%3E%3Cpath d='M0 20 Q25 0 50 20 Q75 40 100 20 Q125 0 150 20 Q175 40 200 20' stroke='rgba(255,255,255,0.05)' stroke-width='1.5' fill='none'/%3E%3Cpath d='M0 44 Q25 24 50 44 Q75 64 100 44 Q125 24 150 44 Q175 64 200 44' stroke='rgba(255,255,255,0.05)' stroke-width='1.5' fill='none'/%3E%3C/svg%3E")`,
+                        borderBottom: '1px solid rgba(255,255,255,0.1)',
                     }}
                 >
                     {/* Logo */}
                     <div
                         style={{
-                            border: '2px solid rgba(255,255,255,0.55)',
-                            borderRadius: '8px',
-                            padding: '5px 12px',
                             display: 'flex',
                             alignItems: 'center',
-                            gap: '8px',
-                            background: 'rgba(255,255,255,0.07)',
+                            gap: '10px',
                         }}
                     >
-                        <svg width="26" height="26" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="2" y="14" width="36" height="24" rx="2" fill="rgba(255,255,255,0.12)" stroke="white" strokeWidth="1.5"/>
-                            <path d="M2 14 L20 6 L38 14" stroke="white" strokeWidth="1.5" fill="none"/>
-                            <line x1="20" y1="6" x2="20" y2="38" stroke="white" strokeWidth="1.5"/>
-                            <line x1="2" y1="14" x2="38" y2="14" stroke="white" strokeWidth="1.5"/>
-                        </svg>
-                        <span style={{ color: 'white', fontWeight: 700, fontSize: '13px', letterSpacing: '2px' }}>SMART</span>
+                        <div
+                            style={{
+                                width: '36px',
+                                height: '36px',
+                                backgroundColor: '#0ea5e9',
+                                borderRadius: '8px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                boxShadow: '0 0 15px rgba(14, 165, 233, 0.4)',
+                            }}
+                        >
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                                <path d="M21 7l-9-4-9 4m18 0l-9 4m9-4v10l-9 4m0-10L3 7m9 4v10M3 7v10l9 4" />
+                            </svg>
+                        </div>
+                        <span style={{ color: 'white', fontWeight: 800, fontSize: '18px', letterSpacing: '1px' }}>SIMS</span>
                     </div>
 
                     {/* Nav */}
-                    <nav style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <nav style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                         {auth.user ? (
                             <Link
                                 href={route('dashboard')}
-                                style={{ color: 'white', fontSize: '14px', textDecoration: 'none', padding: '6px 16px' }}
+                                style={{ color: 'white', fontSize: '14px', fontWeight: 500, textDecoration: 'none', padding: '8px 20px', borderRadius: '6px', background: 'rgba(255,255,255,0.1)' }}
                             >
                                 Dashboard
                             </Link>
@@ -55,7 +61,7 @@ export default function Welcome({ auth }) {
                             <>
                                 <Link
                                     href={route('login')}
-                                    style={{ color: 'white', fontSize: '14px', textDecoration: 'none', padding: '6px 16px' }}
+                                    style={{ color: 'white', fontSize: '14px', fontWeight: 500, textDecoration: 'none', padding: '8px 16px' }}
                                 >
                                     Log In
                                 </Link>
@@ -65,10 +71,11 @@ export default function Welcome({ auth }) {
                                         color: 'white',
                                         fontSize: '14px',
                                         textDecoration: 'none',
-                                        padding: '6px 18px',
-                                        border: '1.5px solid white',
+                                        padding: '8px 24px',
+                                        background: '#0ea5e9',
                                         borderRadius: '6px',
-                                        fontWeight: 500,
+                                        fontWeight: 600,
+                                        boxShadow: '0 4px 12px rgba(14, 165, 233, 0.3)',
                                     }}
                                 >
                                     Register
@@ -79,57 +86,86 @@ export default function Welcome({ auth }) {
                 </header>
 
                 {/* ── HERO ───────────────────────────────────────────────── */}
-                {/*
-                    CARA PAKAI GAMBAR:
-                    1. Taruh file gambar di: public/images/warehouse.jpg
-                    2. Kode di bawah sudah siap — tidak perlu ubah apapun lagi
-                    3. Jika nama file berbeda, ganti 'warehouse.jpg' sesuai nama file kamu
-                */}
                 <section
                     style={{
                         flex: 1,
                         position: 'relative',
-                        minHeight: '540px',
+                        minHeight: '600px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
                         overflow: 'hidden',
-                        backgroundImage: "url('/images/warehouse.jpg')",
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        backgroundRepeat: 'no-repeat',
-                        /* Fallback warna jika gambar belum ada / gagal load */
-                        backgroundColor: '#2a6080',
+                        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
                     }}
                 >
-                    {/* Overlay biru gelap — membuat foto terlihat seperti di desain */}
-                    <div style={{ position: 'absolute', inset: 0, background: 'rgba(20, 55, 80, 0.55)' }} />
+                    {/* Abstract background elements */}
+                    <div style={{ position: 'absolute', top: '-10%', right: '-10%', width: '400px', height: '400px', background: 'radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, transparent 70%)', borderRadius: '50%' }} />
+                    <div style={{ position: 'absolute', bottom: '-10%', left: '-10%', width: '300px', height: '300px', background: 'radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, transparent 70%)', borderRadius: '50%' }} />
+                    
+                    <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', maxWidth: '800px', padding: '0 24px' }}>
+                        <h1 style={{ color: 'white', fontSize: '56px', fontWeight: 800, marginBottom: '24px', lineHeight: 1.1 }}>
+                            Kelola Inventaris <span style={{ color: '#0ea5e9' }}>Lebih Cerdas</span>
+                        </h1>
+                        <p style={{ color: '#94a3b8', fontSize: '18px', lineHeight: 1.6, marginBottom: '40px', maxWidth: '600px', margin: '0 auto 40px' }}>
+                            Sistem Manajemen Inventaris yang modern, efisien, dan mudah digunakan untuk mengoptimalkan operasional bisnis Anda.
+                        </p>
+                        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center' }}>
+                            <Link
+                                href={route('register')}
+                                style={{
+                                    background: '#0ea5e9',
+                                    color: 'white',
+                                    padding: '14px 32px',
+                                    borderRadius: '8px',
+                                    fontWeight: 600,
+                                    fontSize: '16px',
+                                    textDecoration: 'none',
+                                    boxShadow: '0 10px 25px rgba(14, 165, 233, 0.4)',
+                                }}
+                            >
+                                Mulai Sekarang
+                            </Link>
+                            <a
+                                href="#features"
+                                style={{
+                                    border: '1.5px solid rgba(255,255,255,0.2)',
+                                    color: 'white',
+                                    padding: '14px 32px',
+                                    borderRadius: '8px',
+                                    fontWeight: 600,
+                                    fontSize: '16px',
+                                    textDecoration: 'none',
+                                }}
+                            >
+                                Pelajari Lebih Lanjut
+                            </a>
+                        </div>
+                    </div>
                 </section>
 
                 {/* ── FOOTER TOP ─────────────────────────────────────────── */}
-                <footer style={{ background: '#1a3545' }}>
-                    <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '48px 32px 40px' }}>
+                <footer style={{ background: '#0f172a', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                    <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '64px 32px 48px' }}>
 
                         {/* Logo row */}
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '40px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '48px' }}>
                             <div
                                 style={{
-                                    border: '2px solid rgba(255,255,255,0.5)',
+                                    width: '40px',
+                                    height: '40px',
+                                    backgroundColor: '#0ea5e9',
                                     borderRadius: '8px',
-                                    padding: '6px 14px',
                                     display: 'flex',
                                     alignItems: 'center',
-                                    gap: '8px',
-                                    background: 'rgba(255,255,255,0.06)',
+                                    justifyContent: 'center',
                                 }}
                             >
-                                <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect x="2" y="14" width="36" height="24" rx="2" fill="rgba(255,255,255,0.12)" stroke="white" strokeWidth="1.5"/>
-                                    <path d="M2 14 L20 6 L38 14" stroke="white" strokeWidth="1.5" fill="none"/>
-                                    <line x1="20" y1="6" x2="20" y2="38" stroke="white" strokeWidth="1.5"/>
-                                    <line x1="2" y1="14" x2="38" y2="14" stroke="white" strokeWidth="1.5"/>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                                    <path d="M21 7l-9-4-9 4m18 0l-9 4m9-4v10l-9 4m0-10L3 7m9 4v10M3 7v10l9 4" />
                                 </svg>
-                                <span style={{ color: 'white', fontWeight: 700, fontSize: '13px', letterSpacing: '2px' }}>SMART</span>
                             </div>
-                            <div style={{ color: 'white', fontSize: '22px', fontWeight: 700, lineHeight: 1.25 }}>
-                                Smart Inventory<br />Management System
+                            <div style={{ color: 'white', fontSize: '24px', fontWeight: 800 }}>
+                                SIMS
                             </div>
                         </div>
 

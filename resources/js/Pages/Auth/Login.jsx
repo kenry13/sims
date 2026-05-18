@@ -34,61 +34,46 @@ export default function Login({ status, canResetPassword }) {
                 alignItems: 'center',
                 justifyContent: 'center',
                 overflow: 'hidden',
+                background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
             }}>
-                {/* Background image with blue overlay */}
-               <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    backgroundImage: 'url(/images/worker.jpg)',
-                    backgroundSize: 'contain',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundColor: '#8fafc4',
-                    zIndex: 0,
-                    filter: 'none',
-                }} />
-
-                {/* Blur effect untuk area kosong di kiri & kanan */}
-                <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    backgroundImage: 'url(/images/worker.jpg)',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
-                    filter: 'blur(20px) brightness(0.85)',
-                    transform: 'scale(1.1)',
-                    zIndex: 0,
-                }} />
-                <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    backgroundImage: 'url(/images/worker.jpg)',
-                    backgroundSize: 'contain',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
-                    zIndex: 1,
-                }} />
-                <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    backgroundColor: 'rgba(100, 150, 190, 0.45)',
-                    zIndex: 2,
-                }} />
+                {/* Abstract background elements */}
+                <div style={{ position: 'absolute', top: '-10%', right: '-10%', width: '400px', height: '400px', background: 'radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, transparent 70%)', borderRadius: '50%' }} />
+                <div style={{ position: 'absolute', bottom: '-10%', left: '-10%', width: '300px', height: '300px', background: 'radial-gradient(circle, rgba(14, 165, 233, 0.05) 0%, transparent 70%)', borderRadius: '50%' }} />
 
                 {/* Login Card */}
                 <div style={{
                     position: 'relative',
                     zIndex: 3,
-                    backgroundColor: 'rgba(45, 75, 95, 0.88)',
+                    backgroundColor: '#1e293b',
+                    border: '1px solid rgba(255,255,255,0.1)',
                     borderRadius: '16px',
                     padding: '40px 44px',
                     width: '100%',
                     maxWidth: '460px',
-                    boxShadow: '0 8px 40px rgba(0,0,0,0.35)',
+                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
                 }}>
+                    <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+                        <div style={{ 
+                            width: '48px', 
+                            height: '48px', 
+                            backgroundColor: '#0ea5e9', 
+                            borderRadius: '12px', 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'center',
+                            margin: '0 auto 16px',
+                            boxShadow: '0 0 20px rgba(14, 165, 233, 0.3)'
+                        }}>
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                                <path d="M21 7l-9-4-9 4m18 0l-9 4m9-4v10l-9 4m0-10L3 7m9 4v10M3 7v10l9 4" />
+                            </svg>
+                        </div>
+                        <h2 style={{ color: 'white', fontSize: '24px', fontWeight: 800 }}>Selamat Datang</h2>
+                        <p style={{ color: '#94a3b8', fontSize: '14px', marginTop: '4px' }}>Silakan masuk ke akun Anda</p>
+                    </div>
+
                     {status && (
-                        <div style={{ marginBottom: '16px', fontSize: '14px', color: '#4ade80' }}>
+                        <div style={{ marginBottom: '16px', fontSize: '14px', color: '#0ea5e9', textAlign: 'center', padding: '10px', background: 'rgba(14, 165, 233, 0.1)', borderRadius: '8px' }}>
                             {status}
                         </div>
                     )}
@@ -98,16 +83,9 @@ export default function Login({ status, canResetPassword }) {
                         <div style={{ marginBottom: '24px' }}>
                             <label
                                 htmlFor="email"
-                                style={{
-                                    display: 'block',
-                                    color: '#ffffff',
-                                    fontWeight: '700',
-                                    fontSize: '15px',
-                                    marginBottom: '8px',
-                                    fontFamily: 'sans-serif',
-                                }}
+                                style={{ display: 'block', color: '#e2e8f0', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}
                             >
-                                Email
+                                Email Address
                             </label>
                             <input
                                 id="email"
@@ -115,34 +93,30 @@ export default function Login({ status, canResetPassword }) {
                                 name="email"
                                 value={data.email}
                                 autoComplete="username"
-                                autoFocus
                                 onChange={(e) => setData('email', e.target.value)}
                                 style={{
                                     width: '100%',
-                                    padding: '12px 14px',
+                                    padding: '12px 16px',
                                     borderRadius: '8px',
-                                    border: 'none',
-                                    backgroundColor: '#ffffff',
+                                    border: '1px solid rgba(255,255,255,0.1)',
+                                    backgroundColor: 'rgba(15, 23, 42, 0.5)',
+                                    color: 'white',
                                     fontSize: '15px',
                                     outline: 'none',
-                                    boxSizing: 'border-box',
+                                    transition: 'border-color 0.2s',
                                 }}
+                                onFocus={(e) => e.target.style.borderColor = '#0ea5e9'}
+                                onBlur={(e) => e.target.style.borderColor = 'rgba(255,255,255,0.1)'}
+                                required
                             />
-                            <InputError message={errors.email} className="mt-2" />
+                            <InputError message={errors.email} style={{ marginTop: '8px', color: '#f87171', fontSize: '12px' }} />
                         </div>
 
                         {/* Password */}
-                        <div style={{ marginBottom: '20px' }}>
+                        <div style={{ marginBottom: '24px' }}>
                             <label
                                 htmlFor="password"
-                                style={{
-                                    display: 'block',
-                                    color: '#ffffff',
-                                    fontWeight: '700',
-                                    fontSize: '15px',
-                                    marginBottom: '8px',
-                                    fontFamily: 'sans-serif',
-                                }}
+                                style={{ display: 'block', color: '#e2e8f0', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}
                             >
                                 Password
                             </label>
@@ -155,81 +129,78 @@ export default function Login({ status, canResetPassword }) {
                                 onChange={(e) => setData('password', e.target.value)}
                                 style={{
                                     width: '100%',
-                                    padding: '12px 14px',
+                                    padding: '12px 16px',
                                     borderRadius: '8px',
-                                    border: 'none',
-                                    backgroundColor: '#ffffff',
+                                    border: '1px solid rgba(255,255,255,0.1)',
+                                    backgroundColor: 'rgba(15, 23, 42, 0.5)',
+                                    color: 'white',
                                     fontSize: '15px',
                                     outline: 'none',
-                                    boxSizing: 'border-box',
+                                    transition: 'border-color 0.2s',
                                 }}
+                                onFocus={(e) => e.target.style.borderColor = '#0ea5e9'}
+                                onBlur={(e) => e.target.style.borderColor = 'rgba(255,255,255,0.1)'}
+                                required
                             />
-                            <InputError message={errors.password} className="mt-2" />
+                            <InputError message={errors.password} style={{ marginTop: '8px', color: '#f87171', fontSize: '12px' }} />
                         </div>
 
-                        {/* Remember me + Forgot password + Login button */}
-                        <div style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            flexWrap: 'wrap',
-                            gap: '10px',
-                        }}>
-                            {/* Remember me */}
-                            <label style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '8px',
-                                color: '#ffffff',
-                                fontSize: '14px',
-                                cursor: 'pointer',
-                                fontFamily: 'sans-serif',
-                            }}>
+                        {/* Remember & Forgot */}
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '32px' }}>
+                            <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
                                 <Checkbox
                                     name="remember"
                                     checked={data.remember}
                                     onChange={(e) => setData('remember', e.target.checked)}
                                 />
-                                Remember me
+                                <span style={{ marginLeft: '8px', fontSize: '14px', color: '#94a3b8' }}>Ingat saya</span>
                             </label>
 
-                            {/* Forgot password + Login button */}
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                {canResetPassword && (
-                                    <Link
-                                        href={route('password.request')}
-                                        style={{
-                                            color: '#d0e8f8',
-                                            fontSize: '13px',
-                                            textDecoration: 'underline',
-                                            fontFamily: 'sans-serif',
-                                        }}
-                                    >
-                                        Forgot your password?
-                                    </Link>
-                                )}
-
-                                <button
-                                    type="submit"
-                                    disabled={processing}
-                                    style={{
-                                        backgroundColor: '#e8edf2',
-                                        color: '#2d4b5f',
-                                        fontWeight: '700',
-                                        fontSize: '13px',
-                                        letterSpacing: '0.08em',
-                                        padding: '10px 20px',
-                                        borderRadius: '8px',
-                                        border: 'none',
-                                        cursor: processing ? 'not-allowed' : 'pointer',
-                                        opacity: processing ? 0.7 : 1,
-                                        fontFamily: 'sans-serif',
-                                        textTransform: 'uppercase',
-                                    }}
+                            {canResetPassword && (
+                                <Link
+                                    href={route('password.request')}
+                                    style={{ fontSize: '14px', color: '#0ea5e9', textDecoration: 'none', fontWeight: 500 }}
                                 >
-                                    LOG IN
-                                </button>
-                            </div>
+                                    Lupa password?
+                                </Link>
+                            )}
+                        </div>
+
+                        <button
+                            type="submit"
+                            disabled={processing}
+                            style={{
+                                width: '100%',
+                                padding: '14px',
+                                borderRadius: '8px',
+                                border: 'none',
+                                backgroundColor: '#0ea5e9',
+                                color: 'white',
+                                fontSize: '16px',
+                                fontWeight: 700,
+                                cursor: processing ? 'not-allowed' : 'pointer',
+                                opacity: processing ? 0.7 : 1,
+                                boxShadow: '0 4px 12px rgba(14, 165, 233, 0.3)',
+                                transition: 'transform 0.1s, background-color 0.2s',
+                            }}
+                            onMouseEnter={(e) => { if(!processing) e.target.style.backgroundColor = '#0284c7' }}
+                            onMouseLeave={(e) => { if(!processing) e.target.style.backgroundColor = '#0ea5e9' }}
+                            onMouseDown={(e) => { if(!processing) e.target.style.transform = 'scale(0.98)' }}
+                            onMouseUp={(e) => { if(!processing) e.target.style.transform = 'scale(1)' }}
+                        >
+                            {processing ? 'Memproses...' : 'Log in'}
+                        </button>
+
+                        <div style={{ marginTop: '24px', textAlign: 'center' }}>
+                            <p style={{ fontSize: '14px', color: '#94a3b8' }}>
+                                Belum punya akun?{' '}
+                                <Link
+                                    href={route('register')}
+                                    style={{ color: '#0ea5e9', textDecoration: 'none', fontWeight: 600 }}
+                                >
+                                    Daftar sekarang
+                                </Link>
+                            </p>
                         </div>
                     </form>
                 </div>

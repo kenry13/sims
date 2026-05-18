@@ -45,143 +45,237 @@ export default function Edit({ item, categories, suppliers }) {
         <AuthenticatedLayout header="Edit Barang">
             <Head title="Edit Barang" />
 
-            <div
-                style={{
-                    flex: 1,
-                    position: 'relative',
-                    backgroundImage: "url('/Images/worker.jpg')",
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center center',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundAttachment: 'local',
-                    minHeight: '100%',
-                }}
-            >
-                {/* Overlay */}
-                <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(255,255,255,0.80)' }} />
+            <div style={{ padding: '40px 24px', backgroundColor: '#f8fafc', minHeight: 'calc(100vh - 64px)', display: 'flex', justifyContent: 'center' }}>
+                <div style={{ width: '100%', maxWidth: '800px' }}>
+                    {/* Back Button */}
+                    <Link
+                        href="/items"
+                        style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            color: '#64748b',
+                            textDecoration: 'none',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            marginBottom: '20px',
+                            transition: 'color 0.2s'
+                        }}
+                        onMouseEnter={e => e.currentTarget.style.color = '#0ea5e9'}
+                        onMouseLeave={e => e.currentTarget.style.color = '#64748b'}
+                    >
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        Kembali ke Daftar
+                    </Link>
 
-                {/* Centered content */}
-                <div style={{
-                    position: 'relative',
-                    zIndex: 1,
-                    padding: '40px 24px',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'flex-start',
-                }}>
-                    <div style={{ width: '100%', maxWidth: '700px' }}>
-                        <div style={{
-                            backgroundColor: '#2a5f7a',
-                            borderRadius: '12px',
-                            padding: '28px',
-                            boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
-                            border: '1.5px solid #2a3f54',
-                        }}>
-                            <form onSubmit={handleSubmit}>
+                    <div style={{
+                        backgroundColor: 'white',
+                        borderRadius: '20px',
+                        padding: '40px',
+                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                        border: '1px solid #e2e8f0',
+                    }}>
+                        <div style={{ marginBottom: '32px' }}>
+                            <h2 style={{ fontSize: '20px', fontWeight: '800', color: '#1e293b' }}>Edit Informasi Barang</h2>
+                            <p style={{ color: '#64748b', fontSize: '14px', marginTop: '4px' }}>Perbarui detail barang di bawah ini.</p>
+                        </div>
 
-                                {/* Kode & Nama */}
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '18px' }}>
-                                    <div>
-                                        <label style={labelStyle}>Kode Barang <span style={{ color: '#fca5a5' }}>*</span></label>
-                                        <input type="text" value={data.code} onChange={e => setData('code', e.target.value)}
-                                            placeholder="ELK-001" style={inputStyle} />
-                                        {errors.code && <p style={{ color: '#fca5a5', fontSize: '12px', marginTop: '4px' }}>{errors.code}</p>}
-                                    </div>
-                                    <div>
-                                        <label style={labelStyle}>Nama Barang <span style={{ color: '#fca5a5' }}>*</span></label>
-                                        <input type="text" value={data.name} onChange={e => setData('name', e.target.value)}
-                                            placeholder="Laptop Lenovo" style={inputStyle} />
-                                        {errors.name && <p style={{ color: '#fca5a5', fontSize: '12px', marginTop: '4px' }}>{errors.name}</p>}
-                                    </div>
-                                </div>
-
-                                {/* Kategori & Supplier */}
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '18px' }}>
-                                    <div>
-                                        <label style={labelStyle}>Kategori <span style={{ color: '#fca5a5' }}>*</span></label>
-                                        <select value={data.category_id} onChange={e => setData('category_id', e.target.value)} style={inputStyle}>
-                                            <option value="" style={{ backgroundColor: '#2a5f7a' }}>-- Pilih Kategori --</option>
-                                            {categories?.map(cat => (
-                                                <option key={cat.id} value={cat.id} style={{ backgroundColor: '#2a5f7a' }}>{cat.name}</option>
-                                            ))}
-                                        </select>
-                                        {errors.category_id && <p style={{ color: '#fca5a5', fontSize: '12px', marginTop: '4px' }}>{errors.category_id}</p>}
-                                    </div>
-                                    <div>
-                                        <label style={labelStyle}>Supplier <span style={{ color: '#fca5a5' }}>*</span></label>
-                                        <select value={data.supplier_id} onChange={e => setData('supplier_id', e.target.value)} style={inputStyle}>
-                                            <option value="" style={{ backgroundColor: '#2a5f7a' }}>-- Pilih Supplier --</option>
-                                            {suppliers?.map(sup => (
-                                                <option key={sup.id} value={sup.id} style={{ backgroundColor: '#2a5f7a' }}>{sup.name}</option>
-                                            ))}
-                                        </select>
-                                        {errors.supplier_id && <p style={{ color: '#fca5a5', fontSize: '12px', marginTop: '4px' }}>{errors.supplier_id}</p>}
-                                    </div>
-                                </div>
-
-                                {/* Stok, Min Stok, Satuan */}
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px', marginBottom: '18px' }}>
-                                    <div>
-                                        <label style={labelStyle}>Stok Awal <span style={{ color: '#fca5a5' }}>*</span></label>
-                                        <input type="number" value={data.stock} onChange={e => setData('stock', e.target.value)} min="0" style={inputStyle} />
-                                        {errors.stock && <p style={{ color: '#fca5a5', fontSize: '12px', marginTop: '4px' }}>{errors.stock}</p>}
-                                    </div>
-                                    <div>
-                                        <label style={labelStyle}>Stok Minimum <span style={{ color: '#fca5a5' }}>*</span></label>
-                                        <input type="number" value={data.min_stock} onChange={e => setData('min_stock', e.target.value)} min="0" style={inputStyle} />
-                                        {errors.min_stock && <p style={{ color: '#fca5a5', fontSize: '12px', marginTop: '4px' }}>{errors.min_stock}</p>}
-                                    </div>
-                                    <div>
-                                        <label style={labelStyle}>Satuan <span style={{ color: '#fca5a5' }}>*</span></label>
-                                        <input type="text" value={data.unit} onChange={e => setData('unit', e.target.value)} placeholder="unit / rim / pcs" style={inputStyle} />
-                                        {errors.unit && <p style={{ color: '#fca5a5', fontSize: '12px', marginTop: '4px' }}>{errors.unit}</p>}
-                                    </div>
-                                </div>
-
-                                {/* Deskripsi */}
-                                <div style={{ marginBottom: '24px' }}>
-                                    <label style={labelStyle}>Deskripsi</label>
-                                    <textarea value={data.description} onChange={e => setData('description', e.target.value)}
-                                        rows={4} placeholder="Opsional..."
-                                        style={{ ...inputStyle, resize: 'vertical' }} />
-                                </div>
-
-                                {/* Tombol */}
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                                    <button
-                                        type="submit"
-                                        disabled={processing}
+                        <form onSubmit={handleSubmit}>
+                            {/* Kode & Nama */}
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '24px' }}>
+                                <div>
+                                    <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#475569', marginBottom: '8px' }}>Kode Barang <span style={{ color: '#ef4444' }}>*</span></label>
+                                    <input 
+                                        type="text" 
+                                        value={data.code} 
+                                        onChange={e => setData('code', e.target.value)}
+                                        placeholder="E.g. ELK-001" 
                                         style={{
-                                            backgroundColor: 'rgba(255,255,255,0.15)',
-                                            color: '#ffffff',
-                                            fontSize: '13px',
-                                            fontWeight: '700',
-                                            padding: '10px 22px',
-                                            borderRadius: '8px',
-                                            border: '2px solid rgba(255,255,255,0.40)',
-                                            cursor: processing ? 'not-allowed' : 'pointer',
-                                            opacity: processing ? 0.6 : 1,
-                                            letterSpacing: '0.3px',
+                                            width: '100%',
+                                            padding: '12px 16px',
+                                            borderRadius: '10px',
+                                            border: '1px solid #e2e8f0',
+                                            backgroundColor: '#f8fafc',
+                                            fontSize: '15px',
+                                            outline: 'none',
+                                            transition: 'border-color 0.2s, box-shadow 0.2s',
+                                        }}
+                                        onFocus={e => { e.target.style.borderColor = '#0ea5e9'; e.target.style.boxShadow = '0 0 0 3px rgba(14, 165, 233, 0.1)'; }}
+                                        onBlur={e => { e.target.style.borderColor = '#e2e8f0'; e.target.style.boxShadow = 'none'; }}
+                                    />
+                                    {errors.code && <p style={{ color: '#ef4444', fontSize: '12px', marginTop: '6px' }}>{errors.code}</p>}
+                                </div>
+                                <div>
+                                    <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#475569', marginBottom: '8px' }}>Nama Barang <span style={{ color: '#ef4444' }}>*</span></label>
+                                    <input 
+                                        type="text" 
+                                        value={data.name} 
+                                        onChange={e => setData('name', e.target.value)}
+                                        placeholder="E.g. Laptop Lenovo" 
+                                        style={{
+                                            width: '100%',
+                                            padding: '12px 16px',
+                                            borderRadius: '10px',
+                                            border: '1px solid #e2e8f0',
+                                            backgroundColor: '#f8fafc',
+                                            fontSize: '15px',
+                                            outline: 'none',
+                                            transition: 'border-color 0.2s, box-shadow 0.2s',
+                                        }}
+                                        onFocus={e => { e.target.style.borderColor = '#0ea5e9'; e.target.style.boxShadow = '0 0 0 3px rgba(14, 165, 233, 0.1)'; }}
+                                        onBlur={e => { e.target.style.borderColor = '#e2e8f0'; e.target.style.boxShadow = 'none'; }}
+                                    />
+                                    {errors.name && <p style={{ color: '#ef4444', fontSize: '12px', marginTop: '6px' }}>{errors.name}</p>}
+                                </div>
+                            </div>
+
+                            {/* Kategori & Supplier */}
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '24px' }}>
+                                <div>
+                                    <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#475569', marginBottom: '8px' }}>Kategori <span style={{ color: '#ef4444' }}>*</span></label>
+                                    <select 
+                                        value={data.category_id} 
+                                        onChange={e => setData('category_id', e.target.value)}
+                                        style={{
+                                            width: '100%',
+                                            padding: '12px 16px',
+                                            borderRadius: '10px',
+                                            border: '1px solid #e2e8f0',
+                                            backgroundColor: '#f8fafc',
+                                            fontSize: '15px',
+                                            outline: 'none',
+                                            cursor: 'pointer',
                                         }}
                                     >
-                                        {processing ? 'Menyimpan...' : 'Update Barang'}
-                                    </button>
-                                    <Link href="/items" style={{ fontSize: '13px', color: 'rgb(255, 255, 255)', textDecoration: 'none' }}>
-                                        Batal
-                                    </Link>
+                                        <option value="">Pilih Kategori</option>
+                                        {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                                    </select>
+                                    {errors.category_id && <p style={{ color: '#ef4444', fontSize: '12px', marginTop: '6px' }}>{errors.category_id}</p>}
                                 </div>
+                                <div>
+                                    <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#475569', marginBottom: '8px' }}>Supplier <span style={{ color: '#ef4444' }}>*</span></label>
+                                    <select 
+                                        value={data.supplier_id} 
+                                        onChange={e => setData('supplier_id', e.target.value)}
+                                        style={{
+                                            width: '100%',
+                                            padding: '12px 16px',
+                                            borderRadius: '10px',
+                                            border: '1px solid #e2e8f0',
+                                            backgroundColor: '#f8fafc',
+                                            fontSize: '15px',
+                                            outline: 'none',
+                                            cursor: 'pointer',
+                                        }}
+                                    >
+                                        <option value="">Pilih Supplier</option>
+                                        {suppliers.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+                                    </select>
+                                    {errors.supplier_id && <p style={{ color: '#ef4444', fontSize: '12px', marginTop: '6px' }}>{errors.supplier_id}</p>}
+                                </div>
+                            </div>
 
-                            </form>
-                        </div>
+                            {/* Stok & Satuan */}
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '24px', marginBottom: '24px' }}>
+                                <div>
+                                    <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#475569', marginBottom: '8px' }}>Stok</label>
+                                    <input 
+                                        type="number" 
+                                        value={data.stock} 
+                                        onChange={e => setData('stock', e.target.value)}
+                                        style={{
+                                            width: '100%',
+                                            padding: '12px 16px',
+                                            borderRadius: '10px',
+                                            border: '1px solid #e2e8f0',
+                                            backgroundColor: '#f8fafc',
+                                            fontSize: '15px',
+                                            outline: 'none',
+                                        }}
+                                    />
+                                </div>
+                                <div>
+                                    <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#475569', marginBottom: '8px' }}>Stok Minimum</label>
+                                    <input 
+                                        type="number" 
+                                        value={data.min_stock} 
+                                        onChange={e => setData('min_stock', e.target.value)}
+                                        style={{
+                                            width: '100%',
+                                            padding: '12px 16px',
+                                            borderRadius: '10px',
+                                            border: '1px solid #e2e8f0',
+                                            backgroundColor: '#f8fafc',
+                                            fontSize: '15px',
+                                            outline: 'none',
+                                        }}
+                                    />
+                                </div>
+                                <div>
+                                    <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#475569', marginBottom: '8px' }}>Satuan</label>
+                                    <input 
+                                        type="text" 
+                                        value={data.unit} 
+                                        onChange={e => setData('unit', e.target.value)}
+                                        placeholder="E.g. Pcs, Box"
+                                        style={{
+                                            width: '100%',
+                                            padding: '12px 16px',
+                                            borderRadius: '10px',
+                                            border: '1px solid #e2e8f0',
+                                            backgroundColor: '#f8fafc',
+                                            fontSize: '15px',
+                                            outline: 'none',
+                                        }}
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Deskripsi */}
+                            <div style={{ marginBottom: '32px' }}>
+                                <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#475569', marginBottom: '8px' }}>Deskripsi</label>
+                                <textarea 
+                                    value={data.description} 
+                                    onChange={e => setData('description', e.target.value)}
+                                    rows="3"
+                                    style={{
+                                        width: '100%',
+                                        padding: '12px 16px',
+                                        borderRadius: '10px',
+                                        border: '1px solid #e2e8f0',
+                                        backgroundColor: '#f8fafc',
+                                        fontSize: '15px',
+                                        outline: 'none',
+                                        resize: 'vertical',
+                                    }}
+                                ></textarea>
+                            </div>
+
+                            <button
+                                type="submit"
+                                disabled={processing}
+                                style={{
+                                    width: '100%',
+                                    padding: '14px',
+                                    borderRadius: '12px',
+                                    backgroundColor: '#0ea5e9',
+                                    color: 'white',
+                                    fontSize: '16px',
+                                    fontWeight: '700',
+                                    border: 'none',
+                                    cursor: processing ? 'not-allowed' : 'pointer',
+                                    opacity: processing ? 0.7 : 1,
+                                    boxShadow: '0 10px 15px -3px rgba(14, 165, 233, 0.3)',
+                                    transition: 'all 0.2s',
+                                }}
+                                onMouseEnter={e => { if(!processing) e.target.style.backgroundColor = '#0284c7'; }}
+                                onMouseLeave={e => { if(!processing) e.target.style.backgroundColor = '#0ea5e9'; }}
+                            >
+                                {processing ? 'Menyimpan...' : 'Perbarui Barang'}
+                            </button>
+                        </form>
                     </div>
                 </div>
-
-                {/* Fix placeholder color */}
-                <style>{`
-                    input::placeholder, textarea::placeholder {
-                        color: rgba(255,255,255,0.45) !important;
-                    }
-                `}</style>
             </div>
         </AuthenticatedLayout>
     );
