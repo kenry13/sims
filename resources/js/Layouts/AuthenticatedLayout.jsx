@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Link, usePage } from '@inertiajs/react';
+import { Link, usePage, router } from '@inertiajs/react';
 
 export default function AuthenticatedLayout({ header, children }) {
     const { auth } = usePage().props;
     const [sidebarOpen, setSidebarOpen] = useState(true);
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
 
     const navItems = [
         {
@@ -225,17 +226,103 @@ export default function AuthenticatedLayout({ header, children }) {
 
                     <div className="flex items-center gap-4">
                         <Link
-                            href={route('logout')}
-                            method="post"
-                            as="button"
+                            href={route('profile.edit')}
+                            className="flex items-center gap-2 px-4 py-2 text-sm font-600 text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-lg transition-all"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                            <span>Profile</span>
+                        </Link>
+                        <button
+                            onClick={() => setShowLogoutModal(true)}
                             className="flex items-center gap-2 px-4 py-2 text-sm font-600 text-slate-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                             </svg>
                             <span>Logout</span>
-                        </Link>
+                        </button>
                     </div>
+
+                    {showLogoutModal && (
+                        <div style={{ 
+                            position: 'fixed', 
+                            inset: 0, 
+                            backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'center',
+                            zIndex: 1000
+                        }}>
+                            <div style={{ 
+                                backgroundColor: 'white', 
+                                padding: '28px', 
+                                borderRadius: '16px', 
+                                maxWidth: '400px', 
+                                width: '90%'
+                            }}>
+                                <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+                                    <div style={{ 
+                                        width: '64px', 
+                                        height: '64px', 
+                                        borderRadius: '50%', 
+                                        backgroundColor: '#fee2e2', 
+                                        display: 'flex', 
+                                        alignItems: 'center', 
+                                        justifyContent: 'center',
+                                        margin: '0 auto 16px'
+                                    }}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="#dc2626" strokeWidth={2}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                        </svg>
+                                    </div>
+                                    <h3 style={{ fontSize: '20px', fontWeight: '800', color: '#1e293b', marginBottom: '8px' }}>
+                                        Konfirmasi Logout
+                                    </h3>
+                                    <p style={{ fontSize: '14px', color: '#64748b', lineHeight: '1.5' }}>
+                                        Apakah Anda yakin ingin keluar dari akun ini?
+                                    </p>
+                                </div>
+                                <div style={{ display: 'flex', gap: '12px' }}>
+                                    <button
+                                        onClick={() => setShowLogoutModal(false)}
+                                        style={{
+                                            flex: 1,
+                                            padding: '12px 20px',
+                                            border: '1px solid #e2e8f0',
+                                            borderRadius: '10px',
+                                            backgroundColor: 'white',
+                                            color: '#64748b',
+                                            fontSize: '14px',
+                                            fontWeight: '600',
+                                            cursor: 'pointer'
+                                        }}
+                                    >
+                                        Batal
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            router.post(route('logout'));
+                                        }}
+                                        style={{
+                                            flex: 1,
+                                            padding: '12px 20px',
+                                            border: 'none',
+                                            borderRadius: '10px',
+                                            backgroundColor: '#dc2626',
+                                            color: 'white',
+                                            fontSize: '14px',
+                                            fontWeight: '600',
+                                            cursor: 'pointer'
+                                        }}
+                                    >
+                                        Logout
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </header>
 
                 <main className="flex-1 overflow-y-auto">

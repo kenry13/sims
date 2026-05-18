@@ -1,11 +1,7 @@
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 
-export default function UpdateProfileInformation({ mustVerifyEmail, status, className = '' }) {
+export default function UpdateProfileInformation({ mustVerifyEmail, status }) {
     const user = usePage().props.auth.user;
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
@@ -15,77 +11,119 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
 
     const submit = (e) => {
         e.preventDefault();
-
         patch(route('profile.update'));
     };
 
     return (
-        <section className={className}>
-            <header>
-                <h2 className="text-lg font-medium text-gray-900">Profile Information</h2>
-
-                <p className="mt-1 text-sm text-gray-600">
-                    Update your account's profile information and email address.
+        <section>
+            <header style={{ marginBottom: '24px' }}>
+                <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#1e293b', marginBottom: '6px' }}>
+                    Informasi Profil
+                </h2>
+                <p style={{ fontSize: '13px', color: '#64748b' }}>
+                    Perbarui informasi profil dan alamat email akun Anda.
                 </p>
             </header>
 
-            <form onSubmit={submit} className="mt-6 space-y-6">
+            <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
-
-                    <TextInput
-                        id="name"
-                        className="mt-1 block w-full"
+                    <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: '#374151', marginBottom: '8px' }}>
+                        Nama
+                    </label>
+                    <input
+                        type="text"
                         value={data.name}
                         onChange={(e) => setData('name', e.target.value)}
                         required
-                        isFocused
                         autoComplete="name"
+                        style={{
+                            width: '100%',
+                            padding: '12px 16px',
+                            border: errors.name ? '1px solid #fca5a5' : '1px solid #e2e8f0',
+                            borderRadius: '10px',
+                            fontSize: '14px',
+                            outline: 'none',
+                            transition: 'border-color 0.2s'
+                        }}
+                        onFocus={(e) => e.target.style.borderColor = errors.name ? '#fca5a5' : '#0ea5e9'}
+                        onBlur={(e) => e.target.style.borderColor = errors.name ? '#fca5a5' : '#e2e8f0'}
                     />
-
-                    <InputError className="mt-2" message={errors.name} />
+                    {errors.name && (
+                        <p style={{ fontSize: '12px', color: '#dc2626', marginTop: '6px' }}>{errors.name}</p>
+                    )}
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="email" value="Email" />
-
-                    <TextInput
-                        id="email"
+                    <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: '#374151', marginBottom: '8px' }}>
+                        Email
+                    </label>
+                    <input
                         type="email"
-                        className="mt-1 block w-full"
                         value={data.email}
                         onChange={(e) => setData('email', e.target.value)}
                         required
                         autoComplete="username"
+                        style={{
+                            width: '100%',
+                            padding: '12px 16px',
+                            border: errors.email ? '1px solid #fca5a5' : '1px solid #e2e8f0',
+                            borderRadius: '10px',
+                            fontSize: '14px',
+                            outline: 'none',
+                            transition: 'border-color 0.2s'
+                        }}
+                        onFocus={(e) => e.target.style.borderColor = errors.email ? '#fca5a5' : '#0ea5e9'}
+                        onBlur={(e) => e.target.style.borderColor = errors.email ? '#fca5a5' : '#e2e8f0'}
                     />
-
-                    <InputError className="mt-2" message={errors.email} />
+                    {errors.email && (
+                        <p style={{ fontSize: '12px', color: '#dc2626', marginTop: '6px' }}>{errors.email}</p>
+                    )}
                 </div>
 
                 {mustVerifyEmail && user.email_verified_at === null && (
-                    <div>
-                        <p className="text-sm mt-2 text-gray-800">
-                            Your email address is unverified.
+                    <div style={{ padding: '16px', backgroundColor: '#fef3c7', borderRadius: '10px' }}>
+                        <p style={{ fontSize: '13px', color: '#92400e', marginBottom: '8px' }}>
+                            Alamat email Anda belum diverifikasi.
                             <Link
                                 href={route('verification.send')}
                                 method="post"
                                 as="button"
-                                className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                style={{
+                                    color: '#0ea5e9',
+                                    textDecoration: 'underline',
+                                    marginLeft: '4px',
+                                    fontSize: '13px',
+                                    cursor: 'pointer'
+                                }}
                             >
-                                Click here to re-send the verification email.
+                                Klik di sini untuk mengirim ulang email verifikasi.
                             </Link>
                         </p>
-
                         {status === 'verification-link-sent' && (
-                            <div className="mt-2 font-medium text-sm text-green-600">
-                                A new verification link has been sent to your email address.
-                            </div>
+                            <p style={{ fontSize: '13px', color: '#059669', fontWeight: '600' }}>
+                                Tautan verifikasi baru telah dikirim ke alamat email Anda.
+                            </p>
                         )}
                     </div>
                 )}
 
-                <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <button
+                        type="submit"
+                        disabled={processing}
+                        style={{
+                            padding: '12px 24px',
+                            backgroundColor: processing ? '#93c5fd' : '#0ea5e9',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '10px',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            cursor: processing ? 'not-allowed' : 'pointer'
+                        }}
+                    >
+                        Simpan
+                    </button>
 
                     <Transition
                         show={recentlySuccessful}
@@ -94,7 +132,9 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         leave="transition ease-in-out"
                         leaveTo="opacity-0"
                     >
-                        <p className="text-sm text-gray-600">Saved.</p>
+                        <p style={{ fontSize: '13px', color: '#059669', fontWeight: '600' }}>
+                            Tersimpan.
+                        </p>
                     </Transition>
                 </div>
             </form>
